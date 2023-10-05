@@ -26,43 +26,45 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-# Login Sayfası - Angular Projesi
+# Login Page - Angular Project
 
-Bu README dosyası, Angular kullanarak oluşturulan bir login sayfası projesini tanıtmak için kullanılır. Projenin login sayfasının özellikleri ve nasıl kullanılacağı aşağıda açıklanmıştır.
+This README file is used to introduce an Angular project that creates a login page. The features of the login page and how to use it are explained below.
 
-![Login Sayfası] ![image](https://github.com/caglatunc/YMYP-Angular/assets/95507765/5432c79b-9a71-4727-bf17-30188cff1730)
+![Login Page](https://github.com/caglatunc/YMYP-Angular/assets/95507765/5432c79b-9a71-4727-bf17-30188cff1730)
 
-## Proje Hakkında
+## About the Project
 
-Bu Angular projesi, modern bir login sayfası tasarımı içerir. Kullanıcılar, kullanıcı adı veya e-posta adresi ile şifrelerini girebilir ve "Giriş Yap" butonuna tıklayarak sisteme girebilirler.
+This Angular project includes a modern login page design and is developed using **Bootstrap**. Users can enter their username or email address along with their password and log in to the system by clicking the "Login" button.
 
-## Özellikler
+## Features
 
-- Kullanıcı adı veya e-posta doğrulama
-- Şifre doğrulama
-- Eksik veya hatalı veri girişi için uyarılar (Toastr kütüphanesi ile)
+- Username or email validation
+- Password validation
+- Alerts for missing or incorrect data entry (using the Toastr library)
 
-## Başlangıç
+## Getting Started
 
-Proje yerel ortamınıza kurmak ve çalıştırmak için aşağıdaki adımları izleyebilirsiniz:
+To set up and run the project in your local environment, follow the steps below:
 
-### Gereksinimler
+### Prerequisites
 
 - [Node.js](https://nodejs.org/)
 - [Angular CLI](https://cli.angular.io/)
 
-### Kurulum
+### Installation
 
-1. Bu repo'yu klonlayın: `git clone https://github.com/KullaniciAdi/ProjeAdi.git`
-2. Proje dizinine gidin: `cd ProjeAdi`
-3. Bağımlılıkları yükleyin: `npm install`
-4. Uygulamayı başlatın: `ng serve`
+1. Clone this repository: `git clone https://github.com/Username/ProjectName.git`
+2. Navigate to the project directory: `cd ProjectName`
+3. Install the dependencies: `npm install`
+4. Start the application: `ng serve`
 
-Tarayıcınızda `http://localhost:4200` adresine giderek login sayfasını görüntüleyebilirsiniz.
+You can view the login page by going to `http://localhost:4200` in your web browser.
 
-## Kullanım
+## Usage
 
-Login sayfası, kullanıcıların kimlik doğrulaması yapmasını sağlar. Kullanıcı adı veya e-posta ve şifre doğru ise, kullanıcı sisteme giriş yapabilir.
+The login page allows users to perform identity verification. If the username or email and password are correct, the user can log in to the system.
+
+
 
 
 
