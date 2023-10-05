@@ -25,3 +25,44 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# Login Sayfası - Angular Projesi
+
+Bu README dosyası, Angular kullanarak oluşturulan bir login sayfası projesini tanıtmak için kullanılır. Projenin login sayfasının özellikleri ve nasıl kullanılacağı aşağıda açıklanmıştır.
+
+![Login Sayfası] ![image](https://github.com/caglatunc/YMYP-Angular/assets/95507765/5432c79b-9a71-4727-bf17-30188cff1730)
+
+## Proje Hakkında
+
+Bu Angular projesi, modern bir login sayfası tasarımı içerir. Kullanıcılar, kullanıcı adı veya e-posta adresi ile şifrelerini girebilir ve "Giriş Yap" butonuna tıklayarak sisteme girebilirler.
+
+## Özellikler
+
+- Kullanıcı adı veya e-posta doğrulama
+- Şifre doğrulama
+- Eksik veya hatalı veri girişi için uyarılar (Toastr kütüphanesi ile)
+
+## Başlangıç
+
+Proje yerel ortamınıza kurmak ve çalıştırmak için aşağıdaki adımları izleyebilirsiniz:
+
+### Gereksinimler
+
+- [Node.js](https://nodejs.org/)
+- [Angular CLI](https://cli.angular.io/)
+
+### Kurulum
+
+1. Bu repo'yu klonlayın: `git clone https://github.com/KullaniciAdi/ProjeAdi.git`
+2. Proje dizinine gidin: `cd ProjeAdi`
+3. Bağımlılıkları yükleyin: `npm install`
+4. Uygulamayı başlatın: `ng serve`
+
+Tarayıcınızda `http://localhost:4200` adresine giderek login sayfasını görüntüleyebilirsiniz.
+
+## Kullanım
+
+Login sayfası, kullanıcıların kimlik doğrulaması yapmasını sağlar. Kullanıcı adı veya e-posta ve şifre doğru ise, kullanıcı sisteme giriş yapabilir.
+
+
+
