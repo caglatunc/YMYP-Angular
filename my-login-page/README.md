@@ -1,6 +1,6 @@
 # MyLoginPage- Angular Project
 
-[image](https://github.com/caglatunc/YMYP-Angular/assets/95507765/218fa8da-fae9-485c-ac6a-ff2992606c73)
+![Login Sayfası][image](https://github.com/caglatunc/YMYP-Angular/assets/95507765/218fa8da-fae9-485c-ac6a-ff2992606c73)
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.3.
 
 This README file is used to introduce an Angular project that creates a login page. The features of the login page and how to use it are explained below.
