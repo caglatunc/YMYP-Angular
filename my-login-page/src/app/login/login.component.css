@@ -1,0 +1,14 @@
+.password-ul{
+    font-size: 15px;
+    
+}
+
+.pw-success{
+    color: green;
+    text-decoration: line-through;
+}
+
+.pw-error{
+    color: red;
+    text-decoration: none;
+}
