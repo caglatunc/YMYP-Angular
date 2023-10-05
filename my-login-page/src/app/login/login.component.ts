@@ -27,6 +27,19 @@ export class LoginComponent {
       console.log(form.value);
     }else{
       this.toastr.error("Lütfen zorunlu alanları doldurun!");
+
+      const userNameOrEmailEl:any = document.getElementById("userNameOrEmail");
+      console.log(form);
+      if(!userNameOrEmailEl.validity.valid){
+        userNameOrEmailEl.classList.add("is-invalid");
+        userNameOrEmailEl.classList.remove("is-valid");
+
+        const errorMessage = userNameOrEmailEl.validationMessage;
+        const divEl:any = document.querySelector(`#${userNameOrEmailEl.id} + .invalid-feedback`);
+        divEl.innerHTML = errorMessage;
+        }
+
+      this.isPasswordFocus =true;
     }
    
   }
@@ -86,6 +99,21 @@ checkRegexPatternForPassword(el: HTMLInputElement){
     const minSixCharacterEl = document.getElementById("minSixCharacter");
     minSixCharacterEl?.classList.add(text.length < 6 ? "pw-error" : "pw-success");
     minSixCharacterEl?.classList.remove(text.length >= 6 ? "pw-error" : "pw-success");
+
+
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:'\\|,.<>\/?])(?=.*[0-9]).+$/;
+    const isValid = regex.test(text);
+    const isLengthValid = text.length >= 6;
+
+    if(isValid && isLengthValid){
+      this.isPasswordFocus = false;
+      el.classList.add("is-valid");
+      el.classList.remove("is-invalid");
+    }else{
+      this.isPasswordFocus = true;
+      el.classList.remove("is-valid");
+      el.classList.add("is-invalid")
+    }
 }
 
 }

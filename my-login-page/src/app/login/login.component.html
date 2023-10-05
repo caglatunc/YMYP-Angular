@@ -10,7 +10,7 @@
                 <form #loginForm="ngForm" (ngSubmit)="signIn(loginForm)" autocomplete="off">
                     <div class="form-group">
                         <label for="usernameOrEmail">User Name Or Email</label>
-                        <input validate  required minlength="3" type="text" ngModel name="usernameOrEmail" id="usernameOrEmail" class="form-control" >
+                        <input validate  required minlength="3" type="text" ngModel name="userNameOrEmail" id="userNameOrEmail" class="form-control" >
                         <div class="invalid-feedback">
                             User name or email must be valid
                         </div>
@@ -19,17 +19,16 @@
                     <div class="form-group mt-1">
                         <label for="password">Password</label>
                         <div class="input-group mb-3">
-                           
                             <input (focus)="isPasswordFocus = true"  #password ngModel name="password" (keyup)="checkRegexPatternForPassword(password)" 
-                            type="password" class="form-control is-invalid">
-                            
+                            type="password" required minlength="6"  class="form-control ">
                             <span class="input-group-text" id="basic-addon1">
                                 <i (click)="showOrHidePassword(password)" *ngIf="!isShowPassword" class="fa-solid fa-eye"></i>
                                 <i (click)="showOrHidePassword(password)" *ngIf="isShowPassword" class="fa-solid fa-eye-slash"></i>
                             </span>
+                          
                           </div>
                         
-                        <ul class="password-ul"   *ngIf="isPasswordFocus">
+                        <ul class="password-ul"  [ngStyle]="{'display': isPasswordFocus ? 'block': 'none'}">
                             <li class="pw-error" id="minSixCharacter">En az 6 karakter</li>
                             <li class="pw-error" id="upperLetter">Büyük Harf</li>
                             <li  class="pw-error" id="lowerLetter">Küçük Harf</li>
