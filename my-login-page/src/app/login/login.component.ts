@@ -11,16 +11,19 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent {
    isShowPassword: boolean = false;
    isPasswordFocus: boolean =false;
+   
+
 
    constructor(private toastr: ToastrService){
 
    }
-
+   
+   
   signIn(form:NgForm){
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:'\\|,.<>\/?])(?=.*[0-9]).+$/;
     const str = form.controls["password"].value;
     const isValid = regex.test(str);
-
+   
 
     if(form.valid && isValid){
       console.log(form);
@@ -40,6 +43,7 @@ export class LoginComponent {
         }
 
       this.isPasswordFocus =true;
+      
     }
    
   }
