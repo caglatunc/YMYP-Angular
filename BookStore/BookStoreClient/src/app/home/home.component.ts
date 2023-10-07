@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-home',
@@ -6,5 +8,27 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  books: number[]=[1,2,3,4,5]
+  response: any;
+  pageNumbers: number[] = [];
+  
+ 
+  constructor( private http: HttpClient) //HttpClient Api isteklerini yaptığımız servis
+  {
+    this.getAll();
+  }
+
+  getAll(pageNumber = 1){
+    this.http.get(`https://localhost:7078/api/Books/GetAll/${pageNumber}/10`)
+    .subscribe(res=> {
+      this.response = res;
+      this.setPageNumber();
+    })
+  }
+
+  setPageNumber(){
+    this.pageNumbers = [];
+    for(let i=0; i<this.response.totalPageCount; i++){
+      this.pageNumbers.push(i +1)
+    }
+  }
 }

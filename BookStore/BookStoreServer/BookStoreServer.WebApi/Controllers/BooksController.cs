@@ -10,16 +10,11 @@ namespace BookStoreServer.WebApi.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
-    private static List<Book> books = new()
-    {
-        new Book()
-        {
-
-        }
-    };
+    private static List<Book> books = new();
 
     public BooksController()
     {
+        books= new();
         for(int i = 0; i < 100; i++)
         {
             var book = new Book()
