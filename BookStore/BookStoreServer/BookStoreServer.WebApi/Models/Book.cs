@@ -1,4 +1,4 @@
-﻿namespace BookStoreServer.WebApi.NewFolder;
+﻿namespace BookStoreServer.WebApi.Models;
 
 public sealed class Book
 {

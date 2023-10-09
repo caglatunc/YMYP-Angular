@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { RequestModel } from '../models/request.model';
 
 
 @Component({
@@ -10,6 +11,7 @@ import { Component } from '@angular/core';
 export class HomeComponent {
   response: any;
   pageNumbers: number[] = [];
+  request: RequestModel= new RequestModel();
   
  
   constructor( private http: HttpClient) //HttpClient Api isteklerini yaptığımız servis
@@ -18,7 +20,9 @@ export class HomeComponent {
   }
 
   getAll(pageNumber = 1){
-    this.http.get(`https://localhost:7078/api/Books/GetAll/${pageNumber}/10`)
+    this.request.pageNumber = pageNumber;
+    this.http
+    .post(`https://localhost:7078/api/Books/GetAll/`, this.request)
     .subscribe(res=> {
       this.response = res;
       this.setPageNumber();

@@ -1,8 +1,7 @@
 ﻿using BookStoreServer.WebApi.Dtos;
-using BookStoreServer.WebApi.NewFolder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+using BookStoreServer.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BookStoreServer.WebApi.Controllers;
 
@@ -10,17 +9,61 @@ namespace BookStoreServer.WebApi.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
-    private static List<Book> books = new();
-
     public BooksController()
+    {  
+    }
+    [HttpPost] // Methodun tipi 
+
+    public IActionResult GetAll(RequestDto request)
     {
-        books= new();
-        for(int i = 0; i < 100; i++)
+        ResponseDto<List<Book>> response = new();
+
+        string replaceSearch = request.Search.Replace("İ","i").ToLower();
+        var newBooks= SeedData.BookCategories
+        .Where(p=> p.CategoryId == request.CategoryId)
+        .Where(x => 
+        x.Title.Replace("İ","i").ToLower().Contains(replaceSearch) ||
+        x.Author.Replace("İ","i").ToLower().Contains(replaceSearch)
+        )
+
+        
+        .ToList();
+
+        response.Data = newBooks
+        .Skip((request.PageNumber - 1) * request.PageSize)
+        .Take(request.PageSize)
+        .ToList();
+
+        response.PageNumber = request.PageNumber;
+        response.PageSize = request.PageSize;
+        response.TotalPageCount = (int)Math.Ceiling(newBooks.Count / (double)request.PageSize);
+        response.IsFirstPage = request.PageNumber == 1;
+        response.IsLastPage = request.PageNumber == response.TotalPageCount;
+
+        return Ok(response);
+    }
+}
+public static class SeedData
+{
+    public static List<Book> Books = new BookService().CreateSeedBookData();
+    public static List<Category> Categories = new BookService().CreateCategories();
+    public static List<BookCategory> BookCategories = new BookService().CreateBookCategories();
+}
+
+public class BookService
+{
+    private List<Book> books = new();
+    private List<Category> categories = new();
+    private List<BookCategory> bookCategories = new();
+
+    public List<Book> CreateSeedBookData()
+    {
+        for (int i = 0; i < 100; i++)
         {
             var book = new Book()
             {
                 Id = i + 1,
-                Title = $"Kitap {i + 1}" ,
+                Title = $"Kitap {i + 1}",
                 Author = "Yazar" + (i + 1),
                 Summary = "",
                 CoverImageUrl = "https://m.media-amazon.com/images/I/41BKx1AxQWL.jpg",
@@ -32,27 +75,47 @@ public class BooksController : ControllerBase
             };
             books.Add(book);
         }
+        return books;
     }
 
-    [HttpGet("{pageNumber}/{pageSize}")] // Methodun tipi 
-
-    public IActionResult GetAll(int pageNumber, int pageSize)
+    public List<Category> CreateCategories()
     {
-        ResponseDto<List<Book>> response = new();
+        for (int i = 0;i < 10; i++) 
+        {
 
-        response.Data = books
-            .Skip((pageNumber-1) * pageSize)
-            .Take(pageSize)
-            .ToList();
+            var category = new Category()
+            {
+                Id = i + 1,
+                Name = $"Kategori {i + 1}",
+                IsActive = true,
+                IsDeleted = false
+            };
 
-        response.PageNumber = pageNumber;
-        response.PageSize = pageSize;
-        response.TotalPageCount = (int)Math.Ceiling(books.Count / (double)pageSize);
-        response.IsFirstPage = pageNumber == 1;
-        response.IsLastPage = pageNumber == response.TotalPageCount; 
-
-
-        return Ok(response);
+            categories.Add(category);
+        
+        }
+        return categories;
     }
 
+    public List<BookCategory> CreateBookCategories()
+    {
+        int id = 0;
+        Random random = new();
+        foreach(var book in SeedData.Books)
+        {
+            id++;
+            var bookCategory = new BookCategory()
+            {
+                id = id,
+                BookId = book.Id,
+                Book = book,
+                CategoryId = random.Next(1, 10)
+            };
+        bookCategories.Add(bookCategory);
+        }
+    return bookCategories;
+    }
 }
+
+
+    
