@@ -23,14 +23,19 @@
                 placeholder="{{'search' | translate}}">
               </div>
             <ul class="categories">
-                <li>{{'allCategories' | translate}} </li>
-                <li *ngFor="let c of categories">{{c.name}}</li>
+               <li
+                (click)="changeCategory(null)" [ngClass]="request.categoryId === null ? 'active': '' ">
+                  {{'allCategories' | translate}} 
+              </li>
+              <li 
+              [ngClass]="request.categoryId === c.id ? 'active': '' "  
+              *ngFor="let c of categories">
+              {{c.name}}
+            </li>
             </ul>
         </div>
     </div>
    </div>
-
-
 
    <div class="col lg-9 col-md-8 col-sm-6 col-12">
     <div class="input-group mb-3">

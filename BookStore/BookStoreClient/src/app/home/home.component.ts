@@ -13,8 +13,6 @@ export class HomeComponent {
   categories: any = [];
   pageNumbers: number[] = [];
   request: RequestModel= new RequestModel();
-
-  
  
   constructor( private http: HttpClient) //HttpClient Api isteklerini yaptığımız servis
   {
@@ -22,6 +20,11 @@ export class HomeComponent {
     this.getCategories();
   }
 
+  changeCategory(categoryId: number | null = null){
+    console.log('Kategori değişti');
+     this.request.categoryId = categoryId;
+     this.getAll(1);
+  }
   getAll(pageNumber = 1){
     this.request.pageNumber = pageNumber;
     this.http
@@ -34,7 +37,7 @@ export class HomeComponent {
 
   getCategories(){
     this.http.get("https://localhost:7078/api/Categories/GetAll") //api isteği
-    .subscribe(res=> this.categories)
+    .subscribe(res=> this.categories = res);
   }
 
 
