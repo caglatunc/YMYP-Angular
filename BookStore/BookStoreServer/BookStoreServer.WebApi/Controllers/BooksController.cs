@@ -17,15 +17,26 @@ public class BooksController : ControllerBase
     public IActionResult GetAll(RequestDto request)
     {
         ResponseDto<List<Book>> response = new();
-
         string replaceSearch = request.Search.Replace("İ","i").ToLower();
-        var newBooks= SeedData.BookCategories
-        .Where(p=> p.CategoryId == request.CategoryId)
-        .Where(x => 
-        x.Title.Replace("İ","i").ToLower().Contains(replaceSearch) ||
-        x.Author.Replace("İ","i").ToLower().Contains(replaceSearch)
-        )
+        var newBooks = new List<Book>();//Boş bir liste oluşturdum
 
+        if(request.CategoryId !=null) //
+        {
+           newBooks = SeedData.BookCategories
+          .Select(s => s.Book)
+          .ToList();
+        }
+        else
+        {
+            newBooks = SeedData.Books;//Tüm kitapları göndermek istersem, CategoryId göndermiycem null göndericem. Kategorisiz arama yapacaksam, Books dan yapıcam.Kategorisiz arama için bana lazım olan liste.
+        }
+
+      
+      
+        newBooks = newBooks
+        .Where(p => p.Title.Replace("İ", "i").ToLower().Contains(replaceSearch) ||
+                    p.Author.Replace("İ", "i").ToLower().Contains(replaceSearch) ||
+                    p.ISBN.ToLower().Contains(replaceSearch))
         
         .ToList();
 
@@ -80,7 +91,7 @@ public class BookService
 
     public List<Category> CreateCategories()
     {
-        for (int i = 0;i < 10; i++) 
+        for (int i = 0; i < 10; i++) 
         {
 
             var category = new Category()
@@ -97,7 +108,7 @@ public class BookService
         return categories;
     }
 
-    public List<BookCategory> CreateBookCategories()
+    public List<BookCategory> CreateBookCategories() //Kiaplara ait kategori set ettik.Her kitaba min 1 tane kategori set et.Tüm kitaplarım var ama kategorilere bağlı kitaplarım var.
     {
         int id = 0;
         Random random = new();
