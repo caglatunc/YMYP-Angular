@@ -1,5 +1,6 @@
 ﻿using BookStoreServer.WebApi.Dtos;
 using BookStoreServer.WebApi.Models;
+using GSF.FuzzyStrings;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 
@@ -17,28 +18,32 @@ public class BooksController : ControllerBase
     public IActionResult GetAll(RequestDto request)
     {
         ResponseDto<List<Book>> response = new();
-        string replaceSearch = request.Search.Replace("İ","i").ToLower();
+       // string replaceSearch = request.Search.Replace("İ", "i").ToLower();
         var newBooks = new List<Book>();//Boş bir liste oluşturdum
 
-        if(request.CategoryId !=null) //
+        if (request.CategoryId != null) //
         {
-           newBooks = SeedData.BookCategories
-          .Select(s => s.Book)
-          .ToList();
+            newBooks = SeedData.BookCategories
+           .Where(p => p.CategoryId == request.CategoryId)
+           .Select(s => s.Book)
+           .ToList();
         }
         else
         {
             newBooks = SeedData.Books;//Tüm kitapları göndermek istersem, CategoryId göndermiycem null göndericem. Kategorisiz arama yapacaksam, Books dan yapıcam.Kategorisiz arama için bana lazım olan liste.
         }
+       
+        if (!string.IsNullOrEmpty(request.Search))
+        {
+            newBooks = newBooks
+           .Where(p => p.Title.ApproximatelyEquals(request.Search, FuzzyStringComparisonOptions.UseJaccardDistance, FuzzyStringComparisonTolerance.Strong) ||
+            p.Author.ApproximatelyEquals(request.Search, FuzzyStringComparisonOptions.UseJaccardDistance, FuzzyStringComparisonTolerance.Strong) ||
+            p.ISBN.ApproximatelyEquals(request.Search, FuzzyStringComparisonOptions.UseJaccardDistance, FuzzyStringComparisonTolerance.Strong))
 
-      
-      
-        newBooks = newBooks
-        .Where(p => p.Title.Replace("İ", "i").ToLower().Contains(replaceSearch) ||
-                    p.Author.Replace("İ", "i").ToLower().Contains(replaceSearch) ||
-                    p.ISBN.ToLower().Contains(replaceSearch))
-        
         .ToList();
+        }
+
+        
 
         response.Data = newBooks
         .Skip((request.PageNumber - 1) * request.PageSize)
@@ -93,6 +98,16 @@ public class BookService
     {
         for (int i = 0; i < 10; i++) 
         {
+
+            var category2 = new Category()
+            {
+                Id = 0,
+                Name = $"Macera",
+                IsActive = true,
+                IsDeleted = false
+            };
+
+            categories.Add(category2);
 
             var category = new Category()
             {

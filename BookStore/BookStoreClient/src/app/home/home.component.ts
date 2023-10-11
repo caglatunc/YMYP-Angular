@@ -13,6 +13,7 @@ export class HomeComponent {
   categories: any = [];
   pageNumbers: number[] = [];
   request: RequestModel= new RequestModel();
+  searchCategory: string = "";
  
   constructor( private http: HttpClient) //HttpClient Api isteklerini yaptığımız servis
   {
@@ -21,7 +22,7 @@ export class HomeComponent {
   }
 
   changeCategory(categoryId: number | null = null){
-    console.log('Kategori değişti');
+   
      this.request.categoryId = categoryId;
      this.getAll(1);
   }
@@ -36,7 +37,7 @@ export class HomeComponent {
   }
 
   getCategories(){
-    this.http.get("https://localhost:7078/api/Categories/GetAll") //api isteği
+    this.http.get("https://localhost:7078/api/Categories/GetAll") //client api isteği
     .subscribe(res=> this.categories = res);
   }
 
