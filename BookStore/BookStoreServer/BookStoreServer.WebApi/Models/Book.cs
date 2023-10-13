@@ -1,4 +1,6 @@
-﻿namespace BookStoreServer.WebApi.Models;
+﻿using BookStoreServer.WebApi.Models.ValueObjects;
+
+namespace BookStoreServer.WebApi.Models;
 
 public sealed class Book
 {
@@ -7,12 +9,12 @@ public sealed class Book
     public string Author { get; set; } = string.Empty;
     public string Summary { get; set; } = string.Empty;
     public string CoverImageUrl { get; set; } = string.Empty;
-    public decimal Price { get; set; }
+    public Money Price { get; set; } = new(0, "₺");
     public int Quantity { get; set; }
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
+    public bool IsDeleted { get; set; } = false;
     public string ISBN { get; set; } = string.Empty;
     public DateTime CreateAt { get; set; } = DateTime.Now;
-
 
         
 }

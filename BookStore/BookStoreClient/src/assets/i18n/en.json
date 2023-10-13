@@ -1,10 +1,6 @@
 {
-    "categories": "Categories",
-    "adventure": "Adventure",
-    "software": "Software",
-    "love": "Love",
-    "detective": "Detective",
-    "search": "Enter value to search for ...",
-    "homePaga": "Home Page",
+    "categories": "Categories",   
+    "search": "Enter value to search for...",
+    "homePage": "Home Page",
     "allCategories": "All Categories"
 }
