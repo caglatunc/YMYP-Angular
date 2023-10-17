@@ -13,12 +13,11 @@ public class BooksController : ControllerBase
     public BooksController()
     {  
     }
-    [HttpPost] // Methodun tipi 
+    [HttpPost]
 
     public IActionResult GetAll(RequestDto request)
     {
         ResponseDto<List<Book>> response = new();
-       // string replaceSearch = request.Search.Replace("İ", "i").ToLower();
         var newBooks = new List<Book>();//Boş bir liste oluşturdum
 
         if (request.CategoryId != null) //

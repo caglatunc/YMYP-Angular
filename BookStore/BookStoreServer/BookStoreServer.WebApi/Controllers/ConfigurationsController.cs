@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreServer.WebApi.Controllers;
-[Route("api/[controller]/[action")]
+[Route("api/[controller]/[action]")]
 [ApiController]
 public class ConfigurationsController : ControllerBase
 {
@@ -23,12 +23,12 @@ public class ConfigurationsController : ControllerBase
                     IsActive = true,
                     IsDeleted = false
             };
-            categories.Add(category);
+            categories.Add(category); //Listeyi ekliyorum.
         }
 
-        context.Categories.AddRange(categories);
-        
-        
+        context.Categories.AddRange(categories);//Gönderip, kaydediyorum.
+       
+
         List<Book> books = new();
         for(int i=0; i<100 ; i++) 
         {
@@ -48,21 +48,22 @@ public class ConfigurationsController : ControllerBase
             books.Add(book);
         }
         context.Books.AddRange(books);
-
+        
 
         List<BookCategory> bookCategories = new();
         foreach (var book in books)
-          {
-                var bookCategory = new BookCategory()
-               {
-                   BookId = book.Id,
-                   CategoryId = categories[new Random().Next(0, categories.Count)].Id
-               };
-               bookCategories.Add(bookCategory);
-
+        {
+            var bookCategory = new BookCategory()
+            {
+                BookId = book.Id,
+                CategoryId = categories[new Random().Next(0, categories.Count)].Id
+            };
+            bookCategories.Add(bookCategory);
+        }
             context.BookCategories.AddRange(bookCategories);
 
             context.SaveChanges();
+
             return NoContent();
     }
 }

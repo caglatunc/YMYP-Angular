@@ -14,6 +14,8 @@ public class CategoriesController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
+
+        
         var categories = SeedData.Categories;
         return Ok(SeedData.Categories);
 
