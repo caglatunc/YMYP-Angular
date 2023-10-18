@@ -9,30 +9,30 @@ import { RequestModel } from '../models/request.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  response: any;
+  books: any[]=[];
   categories: any = [];
-  pageNumbers: number[] = [];
+  pageNumbers: number[] =[];
   request: RequestModel= new RequestModel();
   searchCategory: string = "";
  
   constructor( private http: HttpClient) //HttpClient Api isteklerini yaptığımız servis
   {
-    this.getAll();
+    //this.getAll();
     this.getCategories();
   }
 
   changeCategory(categoryId: number | null = null){
    
      this.request.categoryId = categoryId;
-     this.getAll(1);
+     //this.getAll();
   }
-  getAll(pageNumber = 1){
-    this.request.pageNumber = pageNumber;
+  getAll(){
+   
     this.http
-    .post(`https://localhost:7078/api/Books/GetAll/`, this.request)
+    .post<any>(`https://localhost:7078/api/Books/GetAll/`, this.request)
     .subscribe(res=> {
-      this.response = res;
-      this.setPageNumber();
+      this.books = res;
+      
     })
   }
 

@@ -15,22 +15,22 @@ public class ConfigurationsController : ControllerBase
     {
         List<Category> categories = new();
 
-        for(int i=0; i<10; i++)
+        for (int i = 0; i < 10; i++)
         {
             var category = new Category()
             {
-                    Name = $"Category {i}",
-                    IsActive = true,
-                    IsDeleted = false
+                Name = $"Category {i}",
+                IsActive = true,
+                IsDeleted = false
             };
             categories.Add(category); //Listeyi ekliyorum.
         }
 
         context.Categories.AddRange(categories);//Gönderip, kaydediyorum.
-       
+
 
         List<Book> books = new();
-        for(int i=0; i<100 ; i++) 
+        for (int i = 0; i < 100; i++)
         {
             var book = new Book()
             {
@@ -42,13 +42,13 @@ public class ConfigurationsController : ControllerBase
                 Quantity = i * 1,
                 IsActive = true,
                 IsDeleted = false,
-                ISBN=$"ISBN {i}",
+                ISBN = $"ISBN {i}",
                 CreateAt = DateTime.Now
             };
             books.Add(book);
         }
         context.Books.AddRange(books);
-        
+
 
         List<BookCategory> bookCategories = new();
         foreach (var book in books)
@@ -60,10 +60,10 @@ public class ConfigurationsController : ControllerBase
             };
             bookCategories.Add(bookCategory);
         }
-            context.BookCategories.AddRange(bookCategories);
+        context.BookCategories.AddRange(bookCategories);
 
-            context.SaveChanges();
+        context.SaveChanges();
 
-            return NoContent();
+        return NoContent();
     }
 }

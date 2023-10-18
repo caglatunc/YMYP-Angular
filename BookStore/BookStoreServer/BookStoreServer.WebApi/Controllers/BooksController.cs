@@ -1,8 +1,8 @@
-﻿using BookStoreServer.WebApi.Dtos;
+﻿using BookStoreServer.WebApi.Context;
+using BookStoreServer.WebApi.Dtos;
 using BookStoreServer.WebApi.Models;
-using GSF.FuzzyStrings;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreServer.WebApi.Controllers;
 
@@ -10,61 +10,36 @@ namespace BookStoreServer.WebApi.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
-    public BooksController()
-    {  
-    }
     [HttpPost]
-
     public IActionResult GetAll(RequestDto request)
     {
-        ResponseDto<List<Book>> response = new();
-        var newBooks = new List<Book>();//Boş bir liste oluşturdum
-
-        if (request.CategoryId != null) //
+        AppDbContext context = new();
+        List<Book> books = new();
+        if (request.CategoryId == null)
         {
-            newBooks = SeedData.BookCategories
-           .Where(p => p.CategoryId == request.CategoryId)
-           .Select(s => s.Book)
+            books = context.Books
+           .Where(p => p.IsActive == true && p.IsDeleted == false)
+           .Where(p => p.Title.ToLower().Contains(request.Search.ToLower()) || p.ISBN.Contains(request.Search))//Kitabın isminden ,ISBN den arayabiliriz.
+           .OrderByDescending(p => p.CreateAt)//Kayıt tarihine göre tersten sırala
+           .Take(request.PageSize)
            .ToList();
         }
         else
-        {
-            newBooks = SeedData.Books;//Tüm kitapları göndermek istersem, CategoryId göndermiycem null göndericem. Kategorisiz arama yapacaksam, Books dan yapıcam.Kategorisiz arama için bana lazım olan liste.
+        {   
+            books = context.BookCategories
+               .Where(p => p.CategoryId == request.CategoryId)//Verdiğim kategori hangsi ie onun listesini al
+               .Include(p => p.Book)//Arkasına bu kategoriye bağlı kitaplarımı getir.
+               .Select(s => s.Book)
+               .Where(p => p.IsActive == true && p.IsDeleted == false)
+               .Where(p => p.Title.ToLower().Contains(request.Search.ToLower()) || p.ISBN.Contains(request.Search))
+               .OrderByDescending(p => p.CreateAt)
+               .Take(request.PageSize)
+               .ToList();
+
         }
-       
-        if (!string.IsNullOrEmpty(request.Search))
-        {
-            newBooks = newBooks
-           .Where(p => p.Title.ApproximatelyEquals(request.Search, FuzzyStringComparisonOptions.UseJaccardDistance, FuzzyStringComparisonTolerance.Strong) ||
-            p.Author.ApproximatelyEquals(request.Search, FuzzyStringComparisonOptions.UseJaccardDistance, FuzzyStringComparisonTolerance.Strong) ||
-            p.ISBN.ApproximatelyEquals(request.Search, FuzzyStringComparisonOptions.UseJaccardDistance, FuzzyStringComparisonTolerance.Strong))
-
-        .ToList();
-        }
-
-        
-
-        response.Data = newBooks
-        .Skip((request.PageNumber - 1) * request.PageSize)
-        .Take(request.PageSize)
-        .ToList();
-
-        response.PageNumber = request.PageNumber;
-        response.PageSize = request.PageSize;
-        response.TotalPageCount = (int)Math.Ceiling(newBooks.Count / (double)request.PageSize);
-        response.IsFirstPage = request.PageNumber == 1;
-        response.IsLastPage = request.PageNumber == response.TotalPageCount;
-
-        return Ok(response);
+        return Ok(books);
     }
 }
-public static class SeedData
-{
-    public static List<Book> Books = new();
-    public static List<Category> Categories = new();
-    public static List<BookCategory> BookCategories = new();
-}
-
 
 
 
