@@ -12,12 +12,14 @@
     padding-left: 10px;
     border-bottom:1px solid #ccc ;
     border-radius: 10px;
+    transition: all .5s;
 
 }
 
 .categories li:hover{
     background-color: #c0bdbd;
     cursor: pointer;
+    transform: translateX(10px);
 }
 
 .card-img-top{
@@ -29,5 +31,10 @@
 
 .active{
     background-color: blue;
+    color: white;
+}
+
+.btn-outline-secondary:hover{
+    background-color: #198754 !important;
     color: white;
 }

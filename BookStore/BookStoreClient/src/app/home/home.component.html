@@ -1,8 +1,8 @@
 <div class="card mt-3">
   <div class=" card-header d-flex justify-content-between align-items-center ">
-    <h5>Home Page</h5>
+    <h5>{{'homePage' | translate}}</h5>
     <div>
-      <a routerLink="/">{{'home' | translate}}</a>
+      <a routerLink="/">{{'homePage' | translate}}</a>
     </div>
   </div>
 </div>
@@ -18,16 +18,14 @@
           <span class="input-group-text" id="basic-addon1">
             <i class="fa-solid fa-magnifying-glass"></i>
           </span>
-          <input [(ngModel)]="searchCategory" 
-          type="search" 
-          class="form-control" 
-          placeholder="{{'search' | translate}}">
+          <input [(ngModel)]="searchCategory" type="search" class="form-control" placeholder="{{'search' | translate}}">
         </div>
         <ul class="categories">
           <li (click)="changeCategory(null)" [ngClass]="request.categoryId === null ? 'active': '' ">
             {{'allCategories' | translate}}
           </li>
-          <li (click)="changeCategory(c.id)" [ngClass]="request.categoryId === c.id ? 'active': '' " *ngFor="let c of categories | category: searchCategory ">
+          <li (click)="changeCategory(c.id)" [ngClass]="request.categoryId === c.id ? 'active': '' "
+            *ngFor="let c of categories | category: searchCategory ">
             {{c.name}}
           </li>
         </ul>
@@ -40,25 +38,37 @@
       <span class="input-group-text" id="basic-addon1">
         <i class="fa-solid fa-magnifying-glass"></i>
       </span>
-      <input [(ngModel)]="request.search" (keydown.enter)="getAll()" (search)="getAll()"
-        type="search" class="form-control" placeholder="{{'search'| translate}}">
+      <input [(ngModel)]="request.search" (keydown.enter)="getAll()" (search)="getAll()" type="search"
+        class="form-control" placeholder="{{'search'| translate}}">
     </div>
-    <div class="row">
-      <div class="col lg-4 col-md-6 col-12 mb-2" *ngFor="let b of response?.data">
-        <div class="card text-center">
-          <div class="card-header">
 
-            <img [src]="b.coverImageUrl" class="card-img-top">
-            <p>{{b.author}}</p>
-          </div>
-
-          <div class="card-body">
-            <h5 class="card-title">{{b.title}}</h5>
-            <p class="card-text">{{b.summary}}</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+      <div class="row">
+        <div class="col lg-4 col-md-6 col-12 mb-2" *ngFor="let b of books">
+          <div class="card text-center">
+            <div class="card-body">
+              <img [src]="b.coverImageUrl" class="card-img-top mt-2">
+            </div>
+            <div class="card-header">
+              <h5 class="card-title">{{b.title}}</h5>
+              <p>{{b.author}}</p>
+            </div>
+              <p class="card-body">{{b.summary}}</p>
+              <button iconControl 
+               class="btn btn-outline-secondary d-flex justify-content-between w-100 align-items-center" (click)="addShoppingCard(b)">
+                <span>{{b.price.value | trCurrency}} {{b.price.currency}}</span>
+                <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <!-- Scroll  -->
+      <div class="search-results" 
+      infiniteScroll 
+      [infiniteScrollDistance]="2" 
+      [infiniteScrollThrottle]="50"
+      (scrolled)="feedData()"></div>
+
     </div>
-  </div>
-</div>
+
+  

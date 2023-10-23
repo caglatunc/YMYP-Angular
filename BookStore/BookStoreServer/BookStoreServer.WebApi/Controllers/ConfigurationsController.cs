@@ -13,24 +13,8 @@ public class ConfigurationsController : ControllerBase
     [HttpGet]
     public IActionResult SeedData()
     {
-        List<Category> categories = new();
-
-        for (int i = 0; i < 10; i++)
-        {
-            var category = new Category()
-            {
-                Name = $"Category {i}",
-                IsActive = true,
-                IsDeleted = false
-            };
-            categories.Add(category); //Listeyi ekliyorum.
-        }
-
-        context.Categories.AddRange(categories);//Gönderip, kaydediyorum.
-
-
         List<Book> books = new();
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10000; i++)
         {
             var book = new Book()
             {
@@ -48,7 +32,9 @@ public class ConfigurationsController : ControllerBase
             books.Add(book);
         }
         context.Books.AddRange(books);
+        context.SaveChanges();
 
+        List<Category> categories = context.Categories.ToList(); //Kategori listemi alıyorum.
 
         List<BookCategory> bookCategories = new();
         foreach (var book in books)

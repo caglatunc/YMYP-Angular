@@ -29,7 +29,7 @@ public class BooksController : ControllerBase
             books = context.BookCategories
                .Where(p => p.CategoryId == request.CategoryId)//Verdiğim kategori hangsi ie onun listesini al
                .Include(p => p.Book)//Arkasına bu kategoriye bağlı kitaplarımı getir.
-               .Select(s => s.Book)
+               .Select(s => s.Book)//Bu kitapları bana seç.
                .Where(p => p.IsActive == true && p.IsDeleted == false)
                .Where(p => p.Title.ToLower().Contains(request.Search.ToLower()) || p.ISBN.Contains(request.Search))
                .OrderByDescending(p => p.CreateAt)

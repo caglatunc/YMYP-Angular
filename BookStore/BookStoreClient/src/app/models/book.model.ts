@@ -3,7 +3,7 @@ export class BookModel{
     title:string ="";
     author: string ="";
     summary: string ="";
-    coverImgUrl: string ="";
+    coverImageUrl: string ="";
     price:Money = new Money();
     quantity: number = 0;
     isActive: boolean = true;
