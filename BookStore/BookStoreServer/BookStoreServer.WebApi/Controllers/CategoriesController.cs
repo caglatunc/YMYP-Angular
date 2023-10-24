@@ -16,7 +16,7 @@ public class CategoriesController : ControllerBase
 {
 
     [HttpPost]
-    public IActionResult Create(CreateCategoryDto request)
+    public IActionResult Create(CreateCategoryDto request)// Create a new book category
     {
         AppDbContext context = new();
         var checkNameIsUnique = context.Categories.Any(p => p.Name == request.Name);
@@ -38,11 +38,11 @@ public class CategoriesController : ControllerBase
         return Ok(category);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}")]  //localhost:7082/api/Categories/RemoveById/1 | localhost:7082/api/Categories/RemoveById?id=1
     public IActionResult RemoveById(int id)
     {
-        AppDbContext context = new();
-        Category category = context.Categories.Find(id);
+        AppDbContext context = new();//instance
+        Category category = context.Categories.Find(id); //Select * From Categories Where Id = 1
         if (category == null) //Böle bir kategori yoksa hata fırlattırdım. 
         {
             return NotFound();
