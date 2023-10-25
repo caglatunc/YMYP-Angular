@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RequestModel } from '../models/request.model';
 import { BookModel } from '../models/book.model';
-import { ShoppingCardService } from '../services/shopping-card.service';
 import { SwallService } from '../services/swall.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ShoppingCartService } from '../services/shopping-cart.service';
+
 
 
 @Component({
@@ -23,18 +24,18 @@ export class HomeComponent {
 
   constructor(
     private http: HttpClient,
-    private shopping: ShoppingCardService,//HttpClient Api isteklerini yaptığımız servis
+    private shopping: ShoppingCartService,//HttpClient Api isteklerini yaptığımız servis
     private swal: SwallService,
     private translate : TranslateService
     ) {
     this.getCategories();
   }
 
-  addShoppingCard(book: BookModel) {
-    this.shopping.shoppingCards.push(book);
-    localStorage.setItem("shoppingCards", JSON.stringify(this.shopping.shoppingCards))
+  addShoppingCart(book: BookModel) {
+    this.shopping.shoppingCarts.push(book);
+    localStorage.setItem("shoppingCarts", JSON.stringify(this.shopping.shoppingCarts))
     this.shopping.count++;
-    this.translate.get("addBookInShoppingCardIsSuccessful").subscribe(res=> {
+    this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res=> {
       this.swal.callToast(res);
     })
   }

@@ -2,7 +2,37 @@
     "categories": "Kategoriler",
     "search": "Aranacak değer girin...",
     "homePage": "Ana Sayfa",
-    "shoppingCardPage": "Sepetim",
+    "shoppingCartPage": "Sepetim",
     "allCategories": "Tüm Kategoriler",
-    "addBookInShoppingCardIsSuccessful": "Kitap başarıyla sepete eklendi"
+    "addBookInShoppingCartIsSuccessful": "Kitap başarıyla sepete eklendi!",
+    "noBooksInShoppingCart": "Sepetinizde ürününüz bulunmamaktadır!",
+    "Horror":"Korku",
+    "Science fiction": "Bilim kurgu",
+    "History":"Tarih",
+    "Literature":"Edebiyat",
+    "Child":"Çocuk",
+    "Psychology":"Psikoloji",
+    "Religion":"Din",
+    "Philosophy":"Felsefe",
+    "Science":"Bilim",
+    "Art":"Sanat",
+    "Sport":"Spor",
+    "Travel":"Seyahat",
+    "Magazine":"Dergi",
+    "Humor":"Mizah",
+    "Personal development":"Kişisel gelişim",
+    "Food":"Yemek",
+    "Hobby":"Hobi",
+    "Reference":"Referans",
+    "Education":"Eğitim",
+    "remove":{
+        "doYouWantToDelete": "Silmek istediğinize emin misiniz?",
+        "cancelBtn":"Vazgeç",
+        "confirmBtn":"Sil",
+        "successMessage":"Silme işlemi başarılı"
+    },
+    "payment": {
+        "title": "Ödeme Sayfası"
+    }
+        
 }

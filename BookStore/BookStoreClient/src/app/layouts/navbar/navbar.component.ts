@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ShoppingCardService } from 'src/app/services/shopping-card.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,7 @@ export class NavbarComponent {
 
   constructor(
     private translate: TranslateService,
-    public shopping: ShoppingCardService
+    public shopping: ShoppingCartService
   ) {
     if (localStorage.getItem("language")) {
       this.language = localStorage.getItem("language") as string;

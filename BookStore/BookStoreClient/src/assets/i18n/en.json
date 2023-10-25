@@ -2,7 +2,16 @@
     "categories": "Categories",   
     "search": "Enter value to search for...",
     "homePage": "Home Page",
-    "shoppingCardPage":"My Shopping Card",
+    "shoppingCartPage":"My Shopping Card",
     "allCategories": "All Categories",
-    "addBookInShoppingCardIsSuccessful": "Book has been added successfully."
+    "addBookInShoppingCartIsSuccessful": "Book has been added successfully!",
+    "noBooksInShoppingCart": "There are no books in the shopping cart!",
+    "remove":{
+        "doYouWantToDelete": "Do you want to delete the book from the shopping cart?",
+        "cancelBtn":"Cancel",
+        "confirmBtn":"Remove",
+        "successMessage":"Book has been deleted successfully."
+
+    }
+    
 }

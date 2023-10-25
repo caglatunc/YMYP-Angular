@@ -77,3 +77,5 @@ C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.
 C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\Antlr3.Runtime.dll
 C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\ExpressionEvaluator.dll
 C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\GSF.Core.dll
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\Iyzipay.dll
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\Newtonsoft.Json.dll

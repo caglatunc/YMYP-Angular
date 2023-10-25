@@ -14,6 +14,7 @@ public sealed class AppDbContext: DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<BookCategory> BookCategories { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
 
 
@@ -25,27 +26,33 @@ public sealed class AppDbContext: DbContext
             price.Property(p => p.Currency).HasMaxLength(5);
         }); //Value Object
 
+        modelBuilder.Entity<Order>().OwnsOne(p => p.Price, price =>
+        {
+            price.Property(p => p.Value).HasColumnType("money");
+            price.Property(p => p.Currency).HasMaxLength(5);
+        });
+
         modelBuilder.Entity<BookCategory>().HasKey(p => new { p.BookId, p.CategoryId });  //Composite Key
 
         modelBuilder.Entity<Category>().HasData( //Seed Data
-            new Category { Id = 1, Name = "Korku", IsActive = true, IsDeleted = false },
-            new Category { Id = 2, Name = "Bilim Kurgu", IsActive = true, IsDeleted = false },
-            new Category { Id = 3, Name = "Tarih", IsActive = true, IsDeleted = false },
-            new Category { Id = 4, Name = "Edebiyat", IsActive = true, IsDeleted = false },
-            new Category { Id = 5, Name = "Çocuk", IsActive = true, IsDeleted = false },
-            new Category { Id = 6, Name = "Psikoloji", IsActive = true, IsDeleted = false },
-            new Category { Id = 7, Name = "Din", IsActive = true, IsDeleted = false },
-            new Category { Id = 8, Name = "Felsefe", IsActive = true, IsDeleted = false },
-            new Category { Id = 9, Name = "Bilim", IsActive = true, IsDeleted = false },
-            new Category { Id = 10, Name = "Sanat", IsActive = true, IsDeleted = false },
-            new Category { Id = 11, Name = "Spor", IsActive = true, IsDeleted = false },
-            new Category { Id = 12, Name = "Gezi", IsActive = true, IsDeleted = false },
-            new Category { Id = 13, Name = "Dergi", IsActive = true, IsDeleted = false },
-            new Category { Id = 14, Name = "Mizah", IsActive = true, IsDeleted = false },
-            new Category { Id = 15, Name = "Kişisel Gelişim", IsActive = true, IsDeleted = false },
-            new Category { Id = 16, Name = "Yemek", IsActive = true, IsDeleted = false },
-            new Category { Id = 17, Name = "Hobi", IsActive = true, IsDeleted = false },
-            new Category { Id = 18, Name = "Referans", IsActive = true, IsDeleted = false },
-            new Category { Id = 19, Name = "Eğitim", IsActive = true, IsDeleted = false });
+            new Category { Id = 1, Name = "Horror", IsActive = true, IsDeleted = false },
+            new Category { Id = 2, Name = "Science fiction", IsActive = true, IsDeleted = false },
+            new Category { Id = 3, Name = "History", IsActive = true, IsDeleted = false },
+            new Category { Id = 4, Name = "Literature", IsActive = true, IsDeleted = false },
+            new Category { Id = 5, Name = "Child", IsActive = true, IsDeleted = false },
+            new Category { Id = 6, Name = "Psychology", IsActive = true, IsDeleted = false },
+            new Category { Id = 7, Name = "Religion", IsActive = true, IsDeleted = false },
+            new Category { Id = 8, Name = "Philosophy", IsActive = true, IsDeleted = false },
+            new Category { Id = 9, Name = "Science", IsActive = true, IsDeleted = false },
+            new Category { Id = 10, Name = "Art", IsActive = true, IsDeleted = false },
+            new Category { Id = 11, Name = "Sport", IsActive = true, IsDeleted = false },
+            new Category { Id = 12, Name = "Travel", IsActive = true, IsDeleted = false },
+            new Category { Id = 13, Name = "Magazine", IsActive = true, IsDeleted = false },
+            new Category { Id = 14, Name = "Humor", IsActive = true, IsDeleted = false },
+            new Category { Id = 15, Name = "Personal development", IsActive = true, IsDeleted = false },
+            new Category { Id = 16, Name = "Food", IsActive = true, IsDeleted = false },
+            new Category { Id = 17, Name = "Hobby", IsActive = true, IsDeleted = false },
+            new Category { Id = 18, Name = "Reference", IsActive = true, IsDeleted = false },
+            new Category { Id = 19, Name = "Education", IsActive = true, IsDeleted = false });
     }
 }

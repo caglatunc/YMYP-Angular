@@ -4,6 +4,7 @@ using BookStoreServer.WebApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStoreServer.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231025105936_mg2")]
+    partial class mg2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,42 +243,6 @@ namespace BookStoreServer.WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BookStoreServer.WebApi.Models.Order", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OrderNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("BookStoreServer.WebApi.Models.Book", b =>
                 {
                     b.OwnsOne("BookStoreServer.WebApi.Models.ValueObjects.Money", "Price", b1 =>
@@ -320,41 +287,6 @@ namespace BookStoreServer.WebApi.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("BookStoreServer.WebApi.Models.Order", b =>
-                {
-                    b.HasOne("BookStoreServer.WebApi.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("BookStoreServer.WebApi.Models.ValueObjects.Money", "Price", b1 =>
-                        {
-                            b1.Property<int>("Orderid")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasMaxLength(5)
-                                .HasColumnType("nvarchar(5)");
-
-                            b1.Property<decimal>("Value")
-                                .HasColumnType("money");
-
-                            b1.HasKey("Orderid");
-
-                            b1.ToTable("Orders");
-
-                            b1.WithOwner()
-                                .HasForeignKey("Orderid");
-                        });
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Price")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

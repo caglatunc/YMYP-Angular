@@ -17,8 +17,26 @@ export class SwallService {
       showConfirmButton:false
 
     })
-    Toast.fire(title, "", icon)
+  Toast.fire(title, "", icon)
+   
+  }
+
+  callSwal(title:string, cancelBtnName: string, confirmBtnName: string,successMessage:string, callBack: () => void){
+    Swal.fire({
+      title:title,
+      icon:"question",
+      showCancelButton:true,
+      cancelButtonText:cancelBtnName,
+      showConfirmButton:true,
+      confirmButtonText:confirmBtnName
+    }).then(res=> {
+      if(res.isConfirmed){
+        this.callToast(successMessage,"success")
+        callBack();
+      }
+    })
   }
 }
+
 
 type SweetAlertIcon = 'success' | 'error' | 'warning' | 'info' | 'question'

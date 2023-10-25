@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
-import { ShoppingCardService } from '../services/shopping-card.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ShoppingCartService } from '../services/shopping-cart.service';
+
 
 @Component({
-  selector: 'app-shopping-card',
-  templateUrl: './shopping-card.component.html',
-  styleUrls: ['./shopping-card.component.css']
+  selector: 'app-shopping-cart',
+  templateUrl: './shopping-cart.component.html',
+  styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCardComponent {
+export class ShoppingCartComponent {
   
   language: string = "en";
+ 
 
   constructor(
-    public shopping: ShoppingCardService,
+    public shopping: ShoppingCartService,
     private translate: TranslateService
   ) {
 
@@ -20,6 +22,6 @@ export class ShoppingCardComponent {
       this.language = localStorage.getItem("language") as string;
     } 
 
-    translate.setDefaultLang(this.language);
+    this.shopping.calcTotal();
   }
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutsComponent } from './layouts/layouts.component';
@@ -14,8 +13,10 @@ import { CategoryPipe } from './pipes/category.pipe';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { IconControlDirective } from './directives/icon-control.directive';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { ShoppingCardComponent } from './shopping-card/shopping-card.component';
 import { TrCurrencyPipe } from 'tr-currency';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -29,7 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NavbarComponent,
     CategoryPipe,
     IconControlDirective,
-    ShoppingCardComponent,
+    ShoppingCartComponent,
    
   ],
   imports: [
