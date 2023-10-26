@@ -59,7 +59,7 @@
             </div>
 
             <div class="form-group">
-                <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger w-100">
+                <button data-bs-toggle="modal" data-bs-target="#paymentModal" class="btn btn-danger w-100">
                     Ödeme Yap
                 </button>
             </div>
@@ -70,23 +70,47 @@
     </div>
 
 </div>
-
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="paymentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content ">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          <h1 class="modal-title fs-5" id="paymentModalLabel">
             {{'payment.title'| translate}}
         </h1>
 
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          
+            <!-- Boostrap Navs & Tabs -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link" (click)="changeTab(1)" [ngClass]="selectedTab === 1 ? 'active': '' ">
+                    {{'payment.buyer'| translate}}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" (click)="changeTab(2)" [ngClass]="selectedTab === 2 ? ' active' : '' ">
+                    {{'payment.adress'| translate}}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" (click)="changeTab(3)" [ngClass]="selectedTab === 3 ? 'active' : '' " >
+                    {{'payment.CreditCart'| translate}}
+                  </a>
+                </li>
+              </ul>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
+          <button type="button" class="btn btn-danger" *ngIf="selectedTab > 1" (click)="changeTab(selectedTab-1)" >
+            {{'payment.prevBtn'| translate}}
+          </button>
+          <button type="button" *ngIf="selectedTab < 3" class="btn btn-primary" (click)="changeTab(selectedTab+1)">
+            {{'payment.nextBtn'| translate}}
+          </button>
+          <button type="button" *ngIf="selectedTab === 3" class="btn btn-success" (click)="payment()">
+            {{'payment.completeBtn'| translate}}
+          </button>
         </div>
       </div>
     </div>

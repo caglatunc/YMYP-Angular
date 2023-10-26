@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { RequestModel } from '../models/request.model';
-import { BookModel } from '../models/book.model';
-import { SwallService } from '../services/swall.service';
+import { RequestModel } from '../../models/request.model';
+import { BookModel } from '../../models/book.model';
+import { SwallService } from '../../services/swall.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ShoppingCartService } from '../services/shopping-cart.service';
+import { ShoppingCartService } from '../../services/shopping-cart.service';
 
 
 
