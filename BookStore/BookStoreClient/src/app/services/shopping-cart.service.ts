@@ -3,6 +3,7 @@ import { SwallService } from './swall.service';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { PaymentModel } from '../models/payment.model';
 
 
 @Injectable({
@@ -68,11 +69,10 @@ export class ShoppingCartService {
     })
   }
   
-  payment(currency:string){
-    const newList = this.shoppingCarts.filter(p=> p.price.currency === currency);
-this.http.post("https://localhost:7078/api/ShoppingCarts/Payment",{books:newList})//shoppingCarts:Bizim kitap listemizi tutuyordu.Karşı tarafta bu listeyi bekliyor.
+  payment(data:PaymentModel, callBack:(res:any)=>void){
+this.http.post("https://localhost:7078/api/ShoppingCarts/Payment",data)
 .subscribe(res=>{
-  
+  callBack(res);
 })
   }
 }

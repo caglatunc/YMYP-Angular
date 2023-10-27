@@ -21,8 +21,8 @@ public sealed class ShoppingCartsController : ControllerBase
         {
             total += book.Price.Value;
         }
-
-        commission = total * 1.2m/100;
+        commission = total;
+        //commission = total * 1.2m/100;
 
         Currency currency = Currency.TRY;
         string requestCurrency = requestDto.Books[0]?.Price?.Currency;//İlk kitabın para tipini alıyoruz.
@@ -32,17 +32,19 @@ public sealed class ShoppingCartsController : ControllerBase
             switch (requestCurrency)
             {
                 case "₺":
-                        currency = Currency.TRY;
+                    currency = Currency.TRY;
                     break;
-
                 case "$":
                     currency = Currency.USD;
                     break;
                 case "£":
                     currency = Currency.GBP;
                     break;
+                case "€":
+                    currency = Currency.EUR;
+                    break;
                 default:
-                    throw new Exception("Para birimi bulunamadı");
+                    throw new Exception("Para birimi bulunamadı.");
                     break;
             }
         }
@@ -87,6 +89,8 @@ public sealed class ShoppingCartsController : ControllerBase
         foreach (var book in requestDto.Books )
         {
             BasketItem item = new BasketItem();
+            item.Category1 ="Book";
+            item.Category2 ="Book";
             item.Id = book.Id.ToString();
             item.Name = book.Title; 
             item. ItemType = BasketItemType.PHYSICAL.ToString();

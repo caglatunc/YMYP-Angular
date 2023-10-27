@@ -11,11 +11,11 @@ export class PaymentModel {
 
 export class BuyerModel {
     id: string = "";
-    name: string = "";
-    surname: string = "";
-    identityNumber: string = "";
-    email: string = "";
-    gsmNumber: string = "";
+    name: string = "Çağla";
+    surname: string = "Tunç Savaş";
+    identityNumber: string = "11111111111";
+    email: string = "caglatuncsavas@gmail.com";
+    gsmNumber: string = "5555555555";
     registrationDate: string = "";
     lastLoginDate: string = "";
     registrationAddress: string = "";
@@ -26,17 +26,17 @@ export class BuyerModel {
 }
 
 export class AddressModel {
-    description: string = "";
-    zipCode: string = "";
-    contactName: string = "";
-    city: string = "";
-    country: string = "";
+    description: string = "İstanbul";
+    zipCode: string = "34245";
+    contactName: string = "Çağla Tunç Savaş";
+    city: string = "İstanbul";
+    country: string = "Türkiye";
 }
 
 export class PaymentCardModel {
-    cardHolderName: string = "";
+    cardHolderName: string = "Çağla Tunç Savaş";
     cardNumber: string = "";
     expireYear: string = "";
     expireMonth: string = "";
-    cvc: string = "";
+    cvc: string = "544";
 }
