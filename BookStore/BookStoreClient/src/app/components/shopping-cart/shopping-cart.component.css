@@ -22,46 +22,55 @@ li:hover {
     margin-right: 5px;
 }
 
-.card-image{
+.card-image {
     max-height: 150px;
     border: 1px solid #cccc;
     padding: 10px;
 }
 
-.trash{
+.trash {
     position: absolute;
     right: 20px;
     cursor: pointer;
 }
 
-.trash:hover{
+.trash:hover {
     color: red;
 }
 
-.expireMonthAndYear{
+.expireMonthAndYear {
     width: 80px;
     padding: 8px;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, .3);
 }
 
-  .col-6 select {
+.col-6 select {
     width: 150%;
     padding: 8px;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, .3);
     border-color: #cccc;
-  }
-  
-  
+}
+
+@media screen and (max-width: 1400px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
 @media screen and (max-width: 1200px) {
     h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
     .col-lg-9 {
         width: 74%;
-     
+
+    }
+
+    img {
+        width: 100%;
     }
 
 }

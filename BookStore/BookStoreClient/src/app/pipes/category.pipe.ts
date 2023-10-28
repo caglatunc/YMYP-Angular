@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'category'
+  name: 'categoryPipe'
 })
 export class CategoryPipe implements PipeTransform {
 

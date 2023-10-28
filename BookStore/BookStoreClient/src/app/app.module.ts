@@ -15,6 +15,8 @@ import { IconControlDirective } from './directives/icon-control.directive';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TrCurrencyPipe } from 'tr-currency';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 
 
@@ -36,9 +38,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     TrCurrencyPipe,
     SweetAlert2Module,
     InfiniteScrollModule,
+    NgxSpinnerModule,
     FormsModule,
     HttpClientModule,
     TranslateModule.forRoot({

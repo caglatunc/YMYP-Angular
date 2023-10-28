@@ -4,6 +4,7 @@
     "homePage": "Ana Sayfa",
     "shoppingCartPage": "Sepetim",
     "allCategories": "Tüm Kategoriler",
+    "paymentIsSuccessful": "Ödeme işlemi başarılı!",
     "addBookInShoppingCartIsSuccessful": "Kitap başarıyla sepete eklendi!",
     "noBooksInShoppingCart": "Sepetinizde ürününüz bulunmamaktadır!",
     "Horror":"Korku",
@@ -33,6 +34,7 @@
     },
     "payment": {
         "title": "Ödeme Sayfası",
+        "pay": "Ödeme Yap",
         "completePaymentBtn": "Ödemeyi Tamamla",
         "buyer": {
             "title": "Alıcı Bilgileri",

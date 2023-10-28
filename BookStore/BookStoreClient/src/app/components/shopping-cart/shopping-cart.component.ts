@@ -4,6 +4,7 @@ import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { PaymentModel } from 'src/app/models/payment.model';
 import { Cities, Countries } from 'src/app/constants/address';
 import { Months, Years } from 'src/app/constants/expireDates';
+import { SwallService } from 'src/app/services/swall.service';
 
 
 @Component({
@@ -26,18 +27,19 @@ export class ShoppingCartComponent {
   cardNumber3: string = "0000";
   cardNumber4: string = "0016";
   expireMonthAndYear: string = "2025-07";
-
+ selectedCurrencyForPayment: string = "₺"; //Ödeme işlemi için seçilen para birimi.
 
   constructor(
     public shopping: ShoppingCartService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private swal: SwallService
   ) {
 
     if (localStorage.getItem("language")) {
       this.language = localStorage.getItem("language") as string;
     }
 
-    this.shopping.calcTotal();
+    this.shopping.checkLocalStoreForShoppingCarts();//Sepetin localstorage'da olup olmadığı kontrol edildi.
     this.request.books = this.shopping.shoppingCarts; //Kitapların listesi alındı. 
   }
 
@@ -45,6 +47,11 @@ export class ShoppingCartComponent {
     this.selectedTab = tabNumber;
   }
 
+  setSelectedPaymentCurrency(currency: string) {
+ this.selectedCurrencyForPayment = currency;
+ const newBooks = this.shopping.shoppingCarts.filter(p=> p.price.currency === this.selectedCurrencyForPayment);
+ this.request.books = newBooks;
+  }
   payment() { 
     this.request.paymentCard.expireMonth = this.expireMonthAndYear.substring(5);
     this.request.paymentCard.expireYear = this.expireMonthAndYear.substring(0,4);
@@ -54,9 +61,14 @@ export class ShoppingCartComponent {
    this.request.buyer.country = this.request.shippingAddress.country;
     this.shopping.payment(this.request, (res)=> {
       const btn = document.getElementById("paymentModalCloseBtn");
-      btn?.click();
-      localStorage.removeItem("shoppingCarts");
-      this.shopping.shoppingCarts = []; //Sepet boşaltıldı.Localstorage'dan da silindi.
+      btn?.click();// ödeme işlemi tamamlandıktan sonra modal kapatıldı.
+      const remainShoppingCarts = this.shopping.shoppingCarts.filter(p=> p.price.currency !== this.selectedCurrencyForPayment);
+      localStorage.setItem("shoppingCarts", JSON.stringify(remainShoppingCarts));
+      this.shopping.checkLocalStoreForShoppingCarts();
+      this.translate.get("paymentIsSuccessful").subscribe(translate =>{
+        this.swal.callToast(translate,"success");
+      })
+      
     })
   }
 

@@ -20,15 +20,18 @@ export class HomeComponent {
   request: RequestModel = new RequestModel();
   searchCategory: string = "";
   newData: any[] = [];
-
-
+  loaderDatas = [1, 2, 3, 4, 5, 6];
+  isLoading: boolean = true;
+  
   constructor(
     private http: HttpClient,
     private shopping: ShoppingCartService,//HttpClient Api isteklerini yaptığımız servis
     private swal: SwallService,
     private translate : TranslateService
     ) {
-    this.getCategories();
+      setTimeout(() => {
+        this.getCategories();
+      }, 2000);
   }
 
   addShoppingCart(book: BookModel) {
@@ -53,18 +56,22 @@ export class HomeComponent {
   }
 
   getAll() {
+    this.isLoading = true;
     this.http
       .post<BookModel[]>(`https://localhost:7078/api/Books/GetAll/`, this.request)
       .subscribe(res => {
         this.books = res;
+        this.isLoading = false;
       })
   }
 
   getCategories() {
+    this.isLoading = true;
     this.http.get("https://localhost:7078/api/Categories/GetAll") //client api isteği
       .subscribe(res => {
         this.categories = res;
         this.getAll();
+        this.isLoading = false;
       });
   }
 
