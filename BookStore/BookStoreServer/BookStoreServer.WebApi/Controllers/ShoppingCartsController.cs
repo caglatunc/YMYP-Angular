@@ -103,17 +103,20 @@ public sealed class ShoppingCartsController : ControllerBase
 
         if(payment.Status == "success")
         {
+            string orderNumber = Order.GetNewOrderNumber();
+            
             List<Order> orders = new();
             foreach(var book in requestDto.Books)
             {
                 Order order = new Order()
                 {
-                    OrderNumber = request.BasketId,
+                    OrderNumber = orderNumber,
                     BookId = book.Id,
                     Price = new Money(book.Price.Value, book.Price.Currency),
                     PaymentDate = DateTime.Now,
                     PaymentType = "Credit Cart",
                     PaymentNumber = payment.PaymentId,
+                    CreatedAt = DateTime.Now
                 };
                 orders.Add(order);
             }
