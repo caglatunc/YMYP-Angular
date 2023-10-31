@@ -1,7 +1,9 @@
 ﻿using BookStoreServer.WebApi.Context;
 using BookStoreServer.WebApi.Dtos;
+using BookStoreServer.WebApi.Enums;
 using BookStoreServer.WebApi.Models;
 using BookStoreServer.WebApi.Models.ValueObjects;
+using BookStoreServer.WebApi.Services;
 using Iyzipay;
 using Iyzipay.Model;
 using Iyzipay.Request;
@@ -13,7 +15,7 @@ namespace BookStoreServer.WebApi.Controllers;
 public sealed class ShoppingCartsController : ControllerBase
 {
     [HttpPost]
-    public IActionResult Payment(PaymentDto requestDto)
+    public async Task<IActionResult> Payment(PaymentDto requestDto)
     {
         decimal total = 0;
         decimal commission = 0;
@@ -43,9 +45,10 @@ public sealed class ShoppingCartsController : ControllerBase
                 case "€":
                     currency = Currency.EUR;
                     break;
+
                 default:
-                    throw new Exception("Para birimi bulunamadı.");
-                    break;
+                   throw new Exception("Para birimi bulunamadı.");
+                  break;
             }
         }
         else
@@ -54,7 +57,7 @@ public sealed class ShoppingCartsController : ControllerBase
         }
 
         //Bağlantı bilgilerini istiyor
-        Options options = new Options();
+        Iyzipay.Options options = new Iyzipay.Options();
         options.ApiKey = "sandbox-4OAzqhdZcQazv1T4W46N3dgMYA8hArsm";
         options.SecretKey = "sandbox-kWVjwRAEYVhxvLvt2OmCtvG5NZzyawqH";
         options.BaseUrl = "https://sandbox-api.iyzipay.com";
@@ -120,9 +123,38 @@ public sealed class ShoppingCartsController : ControllerBase
                 };
                 orders.Add(order);
             }
-            AppDbContext context = new AppDbContext();
+
+            AppDbContext context = new();
+
+           OrderStatus orderStatus = new()
+           {
+               OrderNumber = orderNumber,
+               Status = OrderStatusEnum.AwaitingApproval,
+              StatusDate = DateTime.Now
+           };
+
+            context.OrderStatuses.Add(orderStatus);    
             context.Orders.AddRange(orders);
             context.SaveChanges();
+
+            string response = await MailService.SendEmailAsync(requestDto.Buyer.Email, "Siparişiniz Alındı", $@"
+                <h1>Siparişiniz Alındı</h1>
+                <p>Sipariş numaranız: {orderNumber}</p>
+                <p>Ödeme numaranız: {payment.PaymentId}</p>
+                <p>Ödeme tutarınız: {payment.PaidPrice}</p>
+                <p>Ödeme tarihiniz: {DateTime.Now}</p>
+                <p>Ödeme tipiniz: Kredi Kartı</p>
+                <p>Ödeme durumunuz: Onay bekliyor</p>");
+
+            //mail göndersin
+            //smtp => mail sisteminin bir tane smtp.google.com 127.01.20.312
+            //email
+            //password
+            //port // 587 465
+            //ssl // true false
+            //html
+
+
             return NoContent();
         }
         else
@@ -132,6 +164,5 @@ public sealed class ShoppingCartsController : ControllerBase
 
         //status: success | failure
         //ErrotMessage: Hata mesajı var.
-        return NoContent();
     }
 }

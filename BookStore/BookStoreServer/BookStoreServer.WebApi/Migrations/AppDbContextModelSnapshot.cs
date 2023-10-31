@@ -242,11 +242,11 @@ namespace BookStoreServer.WebApi.Migrations
 
             modelBuilder.Entity("BookStoreServer.WebApi.Models.Order", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BookId")
                         .HasColumnType("int");
@@ -269,11 +269,37 @@ namespace BookStoreServer.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("BookId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("BookStoreServer.WebApi.Models.OrderStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Status", "OrderNumber")
+                        .IsUnique();
+
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("BookStoreServer.WebApi.Models.Book", b =>
@@ -332,7 +358,7 @@ namespace BookStoreServer.WebApi.Migrations
 
                     b.OwnsOne("BookStoreServer.WebApi.Models.ValueObjects.Money", "Price", b1 =>
                         {
-                            b1.Property<int>("Orderid")
+                            b1.Property<int>("OrderId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("Currency")
@@ -343,12 +369,12 @@ namespace BookStoreServer.WebApi.Migrations
                             b1.Property<decimal>("Value")
                                 .HasColumnType("money");
 
-                            b1.HasKey("Orderid");
+                            b1.HasKey("OrderId");
 
                             b1.ToTable("Orders");
 
                             b1.WithOwner()
-                                .HasForeignKey("Orderid");
+                                .HasForeignKey("OrderId");
                         });
 
                     b.Navigation("Book");

@@ -79,3 +79,10 @@ C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.
 C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\GSF.Core.dll
 C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\Iyzipay.dll
 C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\libman.json
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\GenericEmailService.dll
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\MailKit.dll
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\MimeKit.dll
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+C:\YMYP-Angular\BookStore\BookStoreServer\BookStoreServer.WebApi\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

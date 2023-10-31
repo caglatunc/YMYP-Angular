@@ -8,7 +8,7 @@ namespace BookStoreServer.WebApi.Models;
 public sealed class Order
 {
 
-    public int id { get; set; }
+    public int Id { get; set; }
     public string OrderNumber { get; set; }//16 hane ve unique olmalı
 
     [ForeignKey("Book")]
@@ -19,6 +19,7 @@ public sealed class Order
     public DateTime PaymentDate { get; set; }//Siparişin ödeme tarihi
     public string PaymentType { get; set; }//Ödemeyi hangi kanalla yaptığımızı tutuyoruz
     public string PaymentNumber { get; set; }//Ödeme numarası
+   
 
 
     public static string GetNewOrderNumber()
@@ -28,7 +29,7 @@ public sealed class Order
         string newOrderNumber = initialLetter + year;
 
         AppDbContext context = new();
-        var lastOrder = context.Orders.OrderByDescending(o => o.id).FirstOrDefault();
+        var lastOrder = context.Orders.OrderByDescending(o => o.Id).FirstOrDefault();
         string currentOrderNumber = lastOrder?.OrderNumber;
 
         if (currentOrderNumber != null)
@@ -63,3 +64,5 @@ public sealed class Order
         }
     }
 }
+
+
