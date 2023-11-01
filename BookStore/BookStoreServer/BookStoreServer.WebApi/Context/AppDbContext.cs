@@ -16,11 +16,14 @@ public sealed class AppDbContext: DbContext
     public DbSet<BookCategory> BookCategories { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderStatus> OrderStatuses { get; set; }
-
-
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>().HasIndex(p => p.Email).IsUnique(); //Unique Index
+
+        modelBuilder.Entity<User>().HasIndex(p => p.Username).IsUnique(); //Unique Index
+
         modelBuilder.Entity<OrderStatus>().HasIndex(p=> new{ p.Status, p.OrderNumber}).IsUnique(); //Unique Index
 
         modelBuilder.Entity<Book>().OwnsOne(p => p.Price, price =>

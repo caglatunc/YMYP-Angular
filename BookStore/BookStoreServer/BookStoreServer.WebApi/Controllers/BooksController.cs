@@ -1,4 +1,5 @@
-﻿using BookStoreServer.WebApi.Context;
+﻿using AutoMapper;
+using BookStoreServer.WebApi.Context;
 using BookStoreServer.WebApi.Dtos;
 using BookStoreServer.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +11,23 @@ namespace BookStoreServer.WebApi.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
+    private readonly IMapper _mapper;
+    private readonly AppDbContext _context;
+
+    public BooksController(IMapper mapper, AppDbContext context)
+    {
+        _mapper = mapper;
+        _context = context;
+    }
+
     [HttpPost]
     public IActionResult GetAll(RequestDto request)
     {
-        AppDbContext context = new();
+       
         List<Book> books = new();
         if (request.CategoryId == null)
         {
-            books = context.Books
+            books = _context.Books
            .Where(p => p.IsActive == true && p.IsDeleted == false)
            .Where(p => p.Title.ToLower().Contains(request.Search.ToLower()) || p.ISBN.Contains(request.Search))//Kitabın isminden ,ISBN den arayabiliriz.
            .OrderByDescending(p => p.CreateAt)//Kayıt tarihine göre tersten sırala
@@ -26,7 +36,7 @@ public class BooksController : ControllerBase
         }
         else
         {   
-            books = context.BookCategories
+            books = _context.BookCategories
                .Where(p => p.CategoryId == request.CategoryId)//Verdiğim kategori hangsi ie onun listesini al
                .Include(p => p.Book)//Arkasına bu kategoriye bağlı kitaplarımı getir.
                .Select(s => s.Book)//Bu kitapları bana seç.
@@ -37,7 +47,39 @@ public class BooksController : ControllerBase
                .ToList();
 
         }
-        return Ok(books);
+        List<BookDto> requestDto = new();
+        foreach (var book in books)
+        {
+            BookDto bookDto = _mapper.Map<BookDto>(book);
+            bookDto.Categories = _context.BookCategories
+                                .Where(p => p.BookId == book.Id)
+                                .Include(p => p.Category)
+                                .Select(s => s.Category.Name)
+                                .ToList();
+
+            //var bookDto = new BookDto()
+            //{
+            //    Title = book.Title,
+            //    ISBN = book.ISBN,
+            //    Id = book.Id,
+            //    Author = book.Author,
+            //    Categories =
+            //        context.BookCategories
+            //        .Where(p => p.BookId == book.Id)
+            //        .Include(p => p.Category)
+            //        .Select(s => s.Category.Name)
+            //        .ToList(),
+            //    CoverImageUrl = book.CoverImageUrl,
+            //    CreateAt = book.CreateAt,
+            //    IsActive = book.IsActive,
+            //    IsDeleted = book.IsDeleted,
+            //    Price = book.Price,
+            //    Quantity = book.Quantity,
+            //    Summary = book.Summary
+            //};
+            requestDto.Add(bookDto);
+        }
+        return Ok(requestDto);
     }
 }
 

@@ -1,20 +1,44 @@
+using BookStoreServer.WebApi.Context;
 using BookStoreServer.WebApi.Options;
 using BookStoreServer.WebApi.Utilities;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);//AutoMapper'ý kullanabilmek için ekledik.
+
+builder.Services.AddScoped<AppDbContext>();
+
 builder.Services.AddCors(cfr =>
 {
     cfr.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+
+//Authentication => Kullanýcý kontrolü
+//Authorization => Yetki Kontrolü
+
+builder.Services.AddAuthentication().AddJwtBearer(opt =>
+{
+    opt.TokenValidationParameters = new()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "Issuer",
+        ValidAudience = "Audience",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("My secret key my secret key asafasfffsfansdnsnsnsn"))//Token oluþtururken kullandýðýmýz key
+    };
+});
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));//appsettings.json içerisindeki EmailSettings bölümünü alýyoruz.
 
 builder.Services.CreateServiceTool();
 
@@ -30,7 +54,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+
 
 app.MapControllers();
 
