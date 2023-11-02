@@ -14,7 +14,7 @@ public sealed class AuthController : ControllerBase
     private readonly AppDbContext _context;//Dependency Injection
     private readonly IMapper _mapper;//Dependency Injection
 
-    public AuthController(AppDbContext context, IMapper mapper)
+    public AuthController(AppDbContext context, IMapper mapper) //constructor injection
     {
         _context = context;
         _mapper = mapper;
