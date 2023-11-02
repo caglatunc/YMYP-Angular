@@ -8,6 +8,7 @@ import { ShoppingCartService } from '../../services/shopping-cart.service';
 
 
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -27,11 +28,16 @@ export class HomeComponent {
     private http: HttpClient,
     private shopping: ShoppingCartService,//HttpClient Api isteklerini yaptığımız servis
     private swal: SwallService,
-    private translate : TranslateService
+    private translate : TranslateService,
+    
     ) {
-      setTimeout(() => {
-        this.getCategories();
-      }, 2000);
+      //Seçilen kategoriyi hafızada saklıyoruz.
+      if(localStorage.getItem("request")){
+        const requestString: any =localStorage.getItem("request");
+        const requestObj = JSON.parse(requestString);
+        this.request= requestObj;
+      }
+      this.getCategories();
   }
 
   addShoppingCart(book: BookModel) {
@@ -62,6 +68,7 @@ export class HomeComponent {
       .subscribe(res => {
         this.books = res;
         this.isLoading = false;
+        localStorage.setItem("request", JSON.stringify(this.request));
       })
   }
 

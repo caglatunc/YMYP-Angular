@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L1/Ptl94b02HipIXf1eVCbWrhld1LnJF1+BkvZ4DLQkZ49gmUuC2tLTiNMbJJEoYgYNm08cAIVF5SpTLuJDxfQ==",
+  "dgSpecHash": "gcgHRIZ8KzuBuMYhURQICv4vnlj3PNMsJ01C4QMNBSzBXqWq2EHRlIDFrsR6AGSGO01eiFnkhhy6iqSRSQMRNA==",
   "success": true,
   "projectFilePath": "C:\\YMYP-Angular\\BookStore\\BookStoreServer\\BookStoreServer.WebApi\\BookStoreServer.WebApi.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\ercan\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
+    "C:\\Users\\ercan\\.nuget\\packages\\efcore.namingconventions\\7.0.2\\efcore.namingconventions.7.0.2.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\expressionevaluator\\2.0.4\\expressionevaluator.2.0.4.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\genericemailservice\\1.0.3\\genericemailservice.1.0.3.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\gsf.core\\2.4.28\\gsf.core.2.4.28.nupkg.sha512",
@@ -56,6 +57,8 @@
     "C:\\Users\\ercan\\.nuget\\packages\\mimekit\\4.1.0\\mimekit.4.1.0.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
+    "C:\\Users\\ercan\\.nuget\\packages\\npgsql\\7.0.6\\npgsql.7.0.6.nupkg.sha512",
+    "C:\\Users\\ercan\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.11\\npgsql.entityframeworkcore.postgresql.7.0.11.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\ercan\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",

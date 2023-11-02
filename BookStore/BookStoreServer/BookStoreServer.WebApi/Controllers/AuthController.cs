@@ -36,7 +36,7 @@ public sealed class AuthController : ControllerBase
         _context.Add(user);
         _context.SaveChanges();
 
-        return Ok(new {Messade = "Kayıt işlemi başarıyla tamamlandı"});
+        return Ok(new {Message = "Kayıt işlemi başarıyla tamamlandı"});
     }
 
     [HttpPost]
@@ -53,7 +53,9 @@ public sealed class AuthController : ControllerBase
         {
             return BadRequest(new { Message = "Şifre yanlış!" });
         }
+
         string token = JwtService.CreateToken(user);
-        return Ok(new {Token= token});
+
+        return Ok(new LoginResponseDto(Token: token, UserId: user.Id, UserName: user.GetName()));
     }
 }

@@ -1,1 +1,54 @@
-<p>register works!</p>
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="col-lg-4 col-md-5 col-sm-12 col-12">
+    <div class="card">
+        <div class="card-header">
+            <h1>Sign Up</h1>
+            <p>If you want to sign up, please fill your information</p>
+        </div>
+        <div class="card-body">
+            <form #registerForm="ngForm" autocomplete="off" (ngSubmit)="signUp(registerForm)">
+                <div class="form-group">
+                    <label for="name">
+                        Name
+                    </label>
+                    <input type="text" ngModel name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">
+                        Lastname
+                    </label>
+                    <input type="text" ngModel name="lastname" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="username">
+                        Username
+                    </label>
+                    <input type="text" ngModel name="username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email">
+                        Email
+                    </label>
+                    <input type="text" ngModel name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        Password
+                    </label>
+                    <input type="text" ngModel name="password" class="form-control">
+                </div>
+                <div class="form-gorup mt-1">
+                    <button class="btn btn-danger w-100">
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+            <div class="form-group">
+                <a routerLink="/login">
+                    If you have an account, you can login.
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

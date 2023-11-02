@@ -10,6 +10,7 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "EFCore.NamingConventions": "7.0.2",
           "GSF.Core": "2.4.28",
           "GenericEmailService": "1.0.3",
           "Iyzipay": "2.1.55",
@@ -17,6 +18,7 @@
           "Microsoft.AspNetCore.OpenApi": "7.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.11",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.11",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.11",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
@@ -93,6 +95,19 @@
           "lib/net6.0/BouncyCastle.Cryptography.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.2.1.47552"
+          }
+        }
+      },
+      "EFCore.NamingConventions/7.0.2": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.11",
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.11",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/EFCore.NamingConventions.dll": {
+            "assemblyVersion": "7.0.2.0",
+            "fileVersion": "7.0.2.0"
           }
         }
       },
@@ -531,6 +546,31 @@
           }
         }
       },
+      "Npgsql/7.0.6": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "7.0.0"
+        },
+        "runtime": {
+          "lib/net7.0/Npgsql.dll": {
+            "assemblyVersion": "7.0.6.0",
+            "fileVersion": "7.0.6.0"
+          }
+        }
+      },
+      "Npgsql.EntityFrameworkCore.PostgreSQL/7.0.11": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.11",
+          "Microsoft.EntityFrameworkCore.Abstractions": "7.0.11",
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.11",
+          "Npgsql": "7.0.6"
+        },
+        "runtime": {
+          "lib/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "assemblyVersion": "7.0.11.0",
+            "fileVersion": "7.0.11.0"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -809,6 +849,13 @@
       "sha512": "sha512-A6Zr52zVqJKt18ZBsTnX0qhG0kwIQftVAjLmszmkiR/trSp8H+xj1gUOzk7XHwaKgyREMSV1v9XaKrBUeIOdvQ==",
       "path": "bouncycastle.cryptography/2.2.1",
       "hashPath": "bouncycastle.cryptography.2.2.1.nupkg.sha512"
+    },
+    "EFCore.NamingConventions/7.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zJz6+YohdMHBFwi54RyH4bWMVTV6qHhIkGl7TWDyVE7HfOxM0gCux9cDg8yCTmG2ie99yY8XYlIaTGl/TNMnnQ==",
+      "path": "efcore.namingconventions/7.0.2",
+      "hashPath": "efcore.namingconventions.7.0.2.nupkg.sha512"
     },
     "ExpressionEvaluator/2.0.4": {
       "type": "package",
@@ -1131,6 +1178,20 @@
       "sha512": "sha512-R2pZ3B0UjeyHShm9vG+Tu0EBb2lC8b0dFzV9gVn50ofHXh9Smjk6kTn7A/FdAsC8B5cKib1OnGYOXxRBz5XQDg==",
       "path": "newtonsoft.json/13.0.2",
       "hashPath": "newtonsoft.json.13.0.2.nupkg.sha512"
+    },
+    "Npgsql/7.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TAqvwRnm3NJ0QvN7cvu6geJkbI0XPzGVRElVY5hF4gsgA+BnE12x6GM1TLhdeq+7ZKvvo3BD8jXKnXmr3tvdEw==",
+      "path": "npgsql/7.0.6",
+      "hashPath": "npgsql.7.0.6.nupkg.sha512"
+    },
+    "Npgsql.EntityFrameworkCore.PostgreSQL/7.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cHEgEz0ldXc9wVANs8sJqC+3eilqefrkasCBgaVT0tyj8tb1p3/pwy2ngjboNkDG3M0z+xJsJ4jC5p8wySAM3w==",
+      "path": "npgsql.entityframeworkcore.postgresql/7.0.11",
+      "hashPath": "npgsql.entityframeworkcore.postgresql.7.0.11.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",
