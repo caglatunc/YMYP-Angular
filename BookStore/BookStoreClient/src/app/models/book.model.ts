@@ -10,6 +10,9 @@ export class BookModel{
     isDleted: boolean = false;
     isbn: string = "";
     createAt: string ="";
+    categories: string[]=[];
+    shoppingCartId: number = 0;
+    
 }
 
 export class Money{

@@ -1,17 +1,77 @@
 {
-    "categories": "Categories",   
+    "categories": "Categories",
     "search": "Enter value to search for...",
     "homePage": "Home Page",
-    "shoppingCartPage":"My Shopping Card",
+    "shoppingCartPage": "My Shopping Card",
+    "myProfile": "MyProfile",
+    "bookName": "Book Name",
+    "author": "Author",
+    "summary": "Summary",
+    "logout": "Logout",
     "allCategories": "All Categories",
     "addBookInShoppingCartIsSuccessful": "Book has been added successfully!",
     "noBooksInShoppingCart": "There are no books in the shopping cart!",
-    "remove":{
+    "remove": {
         "doYouWantToDelete": "Do you want to delete the book from the shopping cart?",
-        "cancelBtn":"Cancel",
-        "confirmBtn":"Remove",
-        "successMessage":"Book has been deleted successfully."
-
+        "cancelBtn": "Cancel",
+        "confirmBtn": "Remove",
+        "successMessage": "Book has been deleted successfully."
+    },
+    "payment": {
+        "title": "Payment Page",
+        "pay": "Pay",
+        "completePaymentBtn": "Complete Payment",
+        "buyer": {
+            "title": "Buyer Information",
+            "name": "Name",
+            "surname": "Surname",
+            "identityNumber": "Identity Number",
+            "email": "Email",
+            "gsmNumber": "Phone Number"
+        },
+        "address": "Address Information",
+        "isSameAddress": "Shipping and billing address are the same?",
+        "shippingAddress": {
+            "title": "Shipping Address",
+            "country": "Country",
+            "city": "City",
+            "zipCode": "Zip Code",
+            "contactName": "Contact Name",
+            "description": "Full Address"
+        },
+        "billingAddress": {
+            "title": "Billing Address",
+            "country": "Country",
+            "city": "City",
+            "zipCode": "Zip Code",
+            "contactName": "Contact Name",
+            "description": "Full Address"
+        },
+        "creditCart": {
+            "title": "Credit Card Information",
+            "cardHolderName": "Card Holder Name",
+            "cardNumber": "Card Number",
+            "expireMonthAndYear": "Expire Month And Year",
+            "cvc": "CVC"
+        }
+    },
+    "signIn": {
+        "title": "Sign In",
+        "fillYourInformation": "Please fill in your information to sign in",
+        "usernameOrEmail": "Username or Email",
+        "password": "Password",
+        "signInBtn": "Sign In",
+        "gotoRegisterBtn": "Don't have an account? Register now!"
+    },
+    "signUp": {
+        "title": "Sign Up",
+        "fillYourInformation": "If you want to sign up, please fill your information",
+        "name": "Name",
+        "lastname": "Lastname",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "signUpBtn": "Sign Up",
+        "gotoLoginBtn": "Already have an account? Sign in now!"
     }
-    
 }

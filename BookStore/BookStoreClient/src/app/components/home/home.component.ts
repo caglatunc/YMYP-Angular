@@ -5,6 +5,8 @@ import { BookModel } from '../../models/book.model';
 import { SwallService } from '../../services/swall.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
+import { AddShoppingCartModel } from 'src/app/models/add-shopping-cart.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -29,7 +31,7 @@ export class HomeComponent {
     private shopping: ShoppingCartService,//HttpClient Api isteklerini yaptığımız servis
     private swal: SwallService,
     private translate : TranslateService,
-    
+    private auth: AuthService
     ) {
       //Seçilen kategoriyi hafızada saklıyoruz.
       if(localStorage.getItem("request")){
@@ -41,12 +43,25 @@ export class HomeComponent {
   }
 
   addShoppingCart(book: BookModel) {
-    this.shopping.shoppingCarts.push(book);
-    localStorage.setItem("shoppingCarts", JSON.stringify(this.shopping.shoppingCarts))
-    this.shopping.count++;
-    this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res=> {
-      this.swal.callToast(res);
-    })
+    if(localStorage.getItem("response")){
+      const data: AddShoppingCartModel = new AddShoppingCartModel();
+      data.bookId = book.id;
+      data.price = book.price;
+      data.quantity = 1;
+      data.userId = this.auth.userId;
+      this.http.post("https://localhost:7078/api/ShoppingCarts/Add", data).subscribe(res=> {
+        this.shopping.checkLocalStoreForShoppingCarts();
+        this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res=> {
+          this.swal.callToast(res);
+      });
+    });
+    }else{
+      this.shopping.shoppingCarts.push(book);
+      localStorage.setItem("shoppingCarts", JSON.stringify(this.shopping.shoppingCarts))
+      this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res=> {
+        this.swal.callToast(res);
+    });
+    }
   }
 
   feedData() {

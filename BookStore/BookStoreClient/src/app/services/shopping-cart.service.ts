@@ -5,6 +5,8 @@ import { forkJoin } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { PaymentModel } from '../models/payment.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from './auth.service';
+import { SetShoppingCartsModel } from '../models/set-shopping-carts.model';
 
 
 @Injectable({
@@ -21,20 +23,29 @@ export class ShoppingCartService {
     private swal: SwallService,
     private translate: TranslateService,
     private http: HttpClient,
+    private auth: AuthService,
     private spinner: NgxSpinnerService
   ) {
     this.checkLocalStoreForShoppingCarts();
   }
 
   checkLocalStoreForShoppingCarts() {
-    if (localStorage.getItem("shoppingCarts")) {
-      const cards: string | null = localStorage.getItem("shoppingCarts")
-      if (cards !== null) {
-        this.shoppingCarts = JSON.parse(cards);
-
-
+    const shoppingCartsString = localStorage.getItem("shoppingCarts");
+    if (shoppingCartsString) {
+      const carts: string | null = localStorage.getItem("shoppingCarts")
+      if (carts !== null) {
+        this.shoppingCarts = JSON.parse(carts);
       }
+    }else{
+      this.shoppingCarts = [];
     }
+    if(localStorage.getItem("response")){
+     this.http.get<SetShoppingCartsModel[]>("https://localhost:7078/api/ShoppingCarts/GetAll/"+ this.auth.userId,).subscribe(res=> {
+       this.shoppingCarts = res
+       this.calcTotal();
+       })
+     }
+
     this.calcTotal();
   }
 
@@ -57,7 +68,6 @@ export class ShoppingCartService {
     this.prices = [];
     for (const [currency, sum] of sumMap) {
       this.prices.push({ value: sum, currency: currency });
-      console.log(this.prices);
     }
   }
 
@@ -70,10 +80,17 @@ export class ShoppingCartService {
       successMessage: this.translate.get("remove.successMessage")
     }).subscribe(res => {
       this.swal.callSwal(res.doYouWantToDelete, res.cancelBtn, res.confirmBtn, res.successMessage, () => {
-        this.shoppingCarts.splice(index, 1);
+        if(localStorage.getItem("response")){
+          this.http.get("https://localhost:7078/api/ShoppingCarts/RemoveById/" + this.shoppingCarts[index]?.shoppingCartId).subscribe(res=> {
+            this.checkLocalStoreForShoppingCarts();
+          });
+        }else{
+          this.shoppingCarts.splice(index, 1);
         localStorage.setItem("shoppingCarts", JSON.stringify(this.shoppingCarts));//localstorage güncelleme
         this.count = this.shoppingCarts.length;//count'u güncelleme
         this.calcTotal();
+        }
+        
       });
     })
   }

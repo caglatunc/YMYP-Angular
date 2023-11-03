@@ -18,9 +18,15 @@ public sealed class AppDbContext: DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderStatus> OrderStatuses { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<ShoppingCart>().OwnsOne(p => p.Price, price =>
+        {
+            price.Property(p => p.Value).HasColumnType("money");
+            price.Property(p => p.Currency).HasMaxLength(5);
+        });
         modelBuilder.Entity<User>().HasIndex(p => p.Email).IsUnique(); //Unique Index
 
         modelBuilder.Entity<User>().HasIndex(p => p.Username).IsUnique(); //Unique Index

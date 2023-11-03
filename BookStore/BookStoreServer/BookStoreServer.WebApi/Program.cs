@@ -51,6 +51,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next(context);
+    }
+    catch (Exception ex)
+    {
+        throw;
+    }
+});
+
 app.UseCors();
 app.UseHttpsRedirection();
 

@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE19648C-2ECB-470D-80D1-6E47870DFA32}"
 	ProjectSection(SolutionItems) = preProject
 		IyzicoSandBoxCreditCarts.tx = IyzicoSandBoxCreditCarts.tx
+		postgressımage.txt = postgressımage.txt
 	EndProjectSection
 EndProject
 Global

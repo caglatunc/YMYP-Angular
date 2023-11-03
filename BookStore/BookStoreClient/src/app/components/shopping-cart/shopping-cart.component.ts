@@ -39,7 +39,6 @@ export class ShoppingCartComponent {
       this.language = localStorage.getItem("language") as string;
     }
 
-    this.shopping.checkLocalStoreForShoppingCarts();//Sepetin localstorage'da olup olmadığı kontrol edildi.
     this.request.books = this.shopping.shoppingCarts; //Kitapların listesi alındı. 
   }
 

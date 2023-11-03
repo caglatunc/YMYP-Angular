@@ -3,6 +3,11 @@
     "search": "Aranacak değer girin...",
     "homePage": "Ana Sayfa",
     "shoppingCartPage": "Sepetim",
+    "myProfile": "Profilim",
+    "logout": "Çıkış Yap",
+    "bookName": "Kitap Adı",
+    "author": "Yazar",
+    "summary": "Özet",
     "allCategories": "Tüm Kategoriler",
     "paymentIsSuccessful": "Ödeme işlemi başarılı!",
     "addBookInShoppingCartIsSuccessful": "Kitap başarıyla sepete eklendi!",
@@ -70,6 +75,25 @@
             "cvc": "CVC"
         }
 
+        },
+        "signIn":{
+            "title":"Giriş Yap",
+            "fillYourInformation":"Lütfen bilgilerinizi giriniz.",
+            "usernameOrEmail":"Kullanıcı Adı veya Mail Adresi",
+            "password":"Şifre",
+            "signInBtn":"Giriş Yap",
+            "gotoRegisterBtn":"Eğer kayıtlı değilseniz buraya tıklayarak kayıt olabilirsiniz."
+
+        },"signUp":{
+            "title":"Kayıt Formu",
+            "fillYourInformation":"Kayıt olmak için bilgilerinizi giriniz.",
+            "name":"Ad",
+            "lastname":"Soyad",
+            "username":"Kullanıcı Adı",
+            "email":"Mail Adresi",
+            "password":"Şifre",
+            "signUpBtn":"Kayıt Ol",
+            "gotoLoginBtn":"Hesabınız var mı? Giriş yapmak için buraya tıklayınız."
         }
     }
         

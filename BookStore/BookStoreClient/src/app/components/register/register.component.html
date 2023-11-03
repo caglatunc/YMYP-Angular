@@ -2,50 +2,50 @@
 <div class="col-lg-4 col-md-5 col-sm-12 col-12">
     <div class="card">
         <div class="card-header">
-            <h1>Sign Up</h1>
-            <p>If you want to sign up, please fill your information</p>
+            <h1>{{'signUp.title' | translate}}</h1>
+            <p>{{'signUp.fillYourInformation' | translate}}</p>
         </div>
         <div class="card-body">
             <form #registerForm="ngForm" autocomplete="off" (ngSubmit)="signUp(registerForm)">
                 <div class="form-group">
                     <label for="name">
-                        Name
+                        {{'signUp.name' | translate}}
                     </label>
                     <input type="text" ngModel name="name" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="lastname">
-                        Lastname
+                        {{'signUp.lastname' | translate}}
                     </label>
                     <input type="text" ngModel name="lastname" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="username">
-                        Username
+                        {{'signUp.username' | translate}}
                     </label>
                     <input type="text" ngModel name="username" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="email">
-                        Email
+                        {{'signUp.email' | translate}}
                     </label>
                     <input type="text" ngModel name="email" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="password">
-                        Password
+                        {{'signUp.password' | translate}}
                     </label>
                     <input type="text" ngModel name="password" class="form-control">
                 </div>
                 <div class="form-gorup mt-1">
                     <button class="btn btn-danger w-100">
-                        Sign Up
+                        {{'signUp.signUpBtn' | translate}}
                     </button>
                 </div>
             </form>
             <div class="form-group">
                 <a routerLink="/login">
-                    If you have an account, you can login.
+                    {{'signUp.gotoLoginBtn' | translate}}
                 </a>
             </div>
         </div>
