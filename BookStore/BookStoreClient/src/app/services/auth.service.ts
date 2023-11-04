@@ -14,8 +14,8 @@ export class AuthService {
 
   //Kullanıcı girişi yapıp yapmadığını kontrol eden metod.Karlşılığında boolean değer döndürüyor.
   isAuthentication(){
-const responseString = localStorage.getItem("token");//Token bilgisini localstorage'dan alıyoruz.
-if(responseString ){
+const responseString = localStorage.getItem("response");//Token bilgisini localstorage'dan alıyoruz.
+if(responseString){
   const responseJson = JSON.parse(responseString);//Token bilgisini json'a çeviriyoruz.
   this.token = responseJson.token;
   this.userId= responseJson.userId;

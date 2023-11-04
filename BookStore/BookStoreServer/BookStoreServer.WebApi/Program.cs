@@ -11,6 +11,8 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);//AutoMapper'ý kullanab
 
 builder.Services.AddScoped<AppDbContext>();
 
+
+
 builder.Services.AddCors(cfr =>
 {
     cfr.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

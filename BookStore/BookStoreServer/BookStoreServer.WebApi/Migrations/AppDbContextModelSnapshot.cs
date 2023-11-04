@@ -26,83 +26,103 @@ namespace BookStoreServer.WebApi.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("author");
 
                     b.Property<string>("CoverImageUrl")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("cover_image_url");
 
                     b.Property<DateTime>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("create_at");
 
                     b.Property<string>("ISBN")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("isbn");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
 
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("summary");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("title");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_books");
 
-                    b.ToTable("Books");
+                    b.ToTable("books", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreServer.WebApi.Models.BookCategory", b =>
                 {
                     b.Property<int>("BookId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("book_id");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("category_id");
 
-                    b.HasKey("BookId", "CategoryId");
+                    b.HasKey("BookId", "CategoryId")
+                        .HasName("pk_book_categories");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("ix_book_categories_category_id");
 
-                    b.ToTable("BookCategories");
+                    b.ToTable("book_categories", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreServer.WebApi.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_categories");
 
-                    b.ToTable("Categories");
+                    b.ToTable("categories", (string)null);
 
                     b.HasData(
                         new
@@ -244,127 +264,155 @@ namespace BookStoreServer.WebApi.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BookId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("book_id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("OrderNumber")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("order_number");
 
                     b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("payment_date");
 
                     b.Property<string>("PaymentNumber")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("payment_number");
 
                     b.Property<string>("PaymentType")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("payment_type");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_orders");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("BookId")
+                        .HasDatabaseName("ix_orders_book_id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("orders", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreServer.WebApi.Models.OrderStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("OrderNumber")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("order_number");
 
                     b.Property<int>("Status")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
 
                     b.Property<DateTime>("StatusDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("status_date");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_order_statuses");
 
                     b.HasIndex("Status", "OrderNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_order_statuses_status_order_number");
 
-                    b.ToTable("OrderStatuses");
+                    b.ToTable("order_statuses", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreServer.WebApi.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BookId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("book_id");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
 
-                    b.Property<int>("userId")
-                        .HasColumnType("integer");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_shopping_carts");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("BookId")
+                        .HasDatabaseName("ix_shopping_carts_book_id");
 
-                    b.HasIndex("userId");
-
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("shopping_carts", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreServer.WebApi.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("email");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("lastname");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("password");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("username");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_users");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_email");
 
                     b.HasIndex("Username")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_username");
 
-                    b.ToTable("Users");
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreServer.WebApi.Models.Book", b =>
@@ -372,22 +420,26 @@ namespace BookStoreServer.WebApi.Migrations
                     b.OwnsOne("BookStoreServer.WebApi.Models.ValueObjects.Money", "Price", b1 =>
                         {
                             b1.Property<int>("BookId")
-                                .HasColumnType("integer");
+                                .HasColumnType("integer")
+                                .HasColumnName("id");
 
                             b1.Property<string>("Currency")
                                 .IsRequired()
                                 .HasMaxLength(5)
-                                .HasColumnType("character varying(5)");
+                                .HasColumnType("character varying(5)")
+                                .HasColumnName("price_currency");
 
                             b1.Property<decimal>("Value")
-                                .HasColumnType("money");
+                                .HasColumnType("money")
+                                .HasColumnName("price_value");
 
                             b1.HasKey("BookId");
 
-                            b1.ToTable("Books");
+                            b1.ToTable("books");
 
                             b1.WithOwner()
-                                .HasForeignKey("BookId");
+                                .HasForeignKey("BookId")
+                                .HasConstraintName("fk_books_books_id");
                         });
 
                     b.Navigation("Price")
@@ -400,13 +452,15 @@ namespace BookStoreServer.WebApi.Migrations
                         .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_book_categories_books_book_id");
 
                     b.HasOne("BookStoreServer.WebApi.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_book_categories_categories_category_id");
 
                     b.Navigation("Book");
 
@@ -419,27 +473,32 @@ namespace BookStoreServer.WebApi.Migrations
                         .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_orders_books_book_id");
 
                     b.OwnsOne("BookStoreServer.WebApi.Models.ValueObjects.Money", "Price", b1 =>
                         {
                             b1.Property<int>("OrderId")
-                                .HasColumnType("integer");
+                                .HasColumnType("integer")
+                                .HasColumnName("id");
 
                             b1.Property<string>("Currency")
                                 .IsRequired()
                                 .HasMaxLength(5)
-                                .HasColumnType("character varying(5)");
+                                .HasColumnType("character varying(5)")
+                                .HasColumnName("price_currency");
 
                             b1.Property<decimal>("Value")
-                                .HasColumnType("money");
+                                .HasColumnType("money")
+                                .HasColumnName("price_value");
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("orders");
 
                             b1.WithOwner()
-                                .HasForeignKey("OrderId");
+                                .HasForeignKey("OrderId")
+                                .HasConstraintName("fk_orders_orders_id");
                         });
 
                     b.Navigation("Book");
@@ -454,41 +513,38 @@ namespace BookStoreServer.WebApi.Migrations
                         .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BookStoreServer.WebApi.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_shopping_carts_books_book_id");
 
                     b.OwnsOne("BookStoreServer.WebApi.Models.ValueObjects.Money", "Price", b1 =>
                         {
                             b1.Property<int>("ShoppingCartId")
-                                .HasColumnType("integer");
+                                .HasColumnType("integer")
+                                .HasColumnName("id");
 
                             b1.Property<string>("Currency")
                                 .IsRequired()
                                 .HasMaxLength(5)
-                                .HasColumnType("character varying(5)");
+                                .HasColumnType("character varying(5)")
+                                .HasColumnName("price_currency");
 
                             b1.Property<decimal>("Value")
-                                .HasColumnType("money");
+                                .HasColumnType("money")
+                                .HasColumnName("price_value");
 
                             b1.HasKey("ShoppingCartId");
 
-                            b1.ToTable("ShoppingCarts");
+                            b1.ToTable("shopping_carts");
 
                             b1.WithOwner()
-                                .HasForeignKey("ShoppingCartId");
+                                .HasForeignKey("ShoppingCartId")
+                                .HasConstraintName("fk_shopping_carts_shopping_carts_id");
                         });
 
                     b.Navigation("Book");
 
                     b.Navigation("Price")
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

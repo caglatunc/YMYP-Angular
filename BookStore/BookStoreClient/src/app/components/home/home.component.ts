@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RequestModel } from '../../models/request.model';
 import { BookModel } from '../../models/book.model';
@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { AddShoppingCartModel } from 'src/app/models/add-shopping-cart.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 
 
@@ -31,7 +32,8 @@ export class HomeComponent {
     private shopping: ShoppingCartService,//HttpClient Api isteklerini yaptığımız servis
     private swal: SwallService,
     private translate : TranslateService,
-    private auth: AuthService
+    private auth: AuthService,
+    private error: ErrorService
     ) {
       //Seçilen kategoriyi hafızada saklıyoruz.
       if(localStorage.getItem("request")){
@@ -49,12 +51,18 @@ export class HomeComponent {
       data.price = book.price;
       data.quantity = 1;
       data.userId = this.auth.userId;
-      this.http.post("https://localhost:7078/api/ShoppingCarts/Add", data).subscribe(res=> {
-        this.shopping.checkLocalStoreForShoppingCarts();
-        this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res=> {
-          this.swal.callToast(res);
+      this.http.post("https://localhost:7078/api/ShoppingCarts/Add", data).subscribe({
+        next: (res: any)=>{
+          this.shopping.checkLocalStoreForShoppingCarts();
+            this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res=> {
+              this.swal.callToast(res);
+        });
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.error.errorHandler(err);
+        }
+
       });
-    });
     }else{
       this.shopping.shoppingCarts.push(book);
       localStorage.setItem("shoppingCarts", JSON.stringify(this.shopping.shoppingCarts))
@@ -80,20 +88,30 @@ export class HomeComponent {
     this.isLoading = true;
     this.http
       .post<BookModel[]>(`https://localhost:7078/api/Books/GetAll/`, this.request)
-      .subscribe(res => {
-        this.books = res;
-        this.isLoading = false;
-        localStorage.setItem("request", JSON.stringify(this.request));
+      .subscribe({
+        next: (res: any)=>{
+          this.books = res;
+            this.isLoading = false;
+            localStorage.setItem("request", JSON.stringify(this.request));
+        },
+        error: (err: HttpErrorResponse)=>{
+          this.error.errorHandler(err);
+        }
       })
   }
 
   getCategories() {
     this.isLoading = true;
     this.http.get("https://localhost:7078/api/Categories/GetAll") //client api isteği
-      .subscribe(res => {
-        this.categories = res;
-        this.getAll();
-        this.isLoading = false;
+      .subscribe({
+        next:(res: any)=>{
+          this.categories = res;
+          this.getAll();
+          this.isLoading = false;
+        },
+        error: (err: HttpErrorResponse)=> {
+          this.error.errorHandler(err);
+        }
       });
   }
 

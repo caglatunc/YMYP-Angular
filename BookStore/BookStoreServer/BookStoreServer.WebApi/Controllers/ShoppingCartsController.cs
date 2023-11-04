@@ -16,6 +16,8 @@ namespace BookStoreServer.WebApi.Controllers;
 
 public sealed class ShoppingCartsController : ControllerBase
 {
+    
+
     [HttpPost]
     public IActionResult Add(AddShoppingCartDto request)
     {
@@ -25,7 +27,7 @@ public sealed class ShoppingCartsController : ControllerBase
             BookId = request.BookId,
             Price = request.Price,
             Quantity = 1,
-            userId = request.UserId
+            UserId = request.UserId
         };
         context.Add(cart);
         context.SaveChanges();
@@ -79,7 +81,7 @@ public sealed class ShoppingCartsController : ControllerBase
             ShoppingCart shoppingCart = new()
             {
                 BookId = item.BookId,
-                userId = item.UserId,
+                UserId = item.UserId,
                 Price = item.Price,
                 Quantity=item.Quantity
             };
@@ -183,64 +185,77 @@ public sealed class ShoppingCartsController : ControllerBase
 
         if(payment.Status == "success")
         {
-            string orderNumber = Order.GetNewOrderNumber();
-            
-            List<Order> orders = new();
-            foreach(var book in requestDto.Books)
+            try
             {
-                Order order = new Order()
+                string orderNumber = Order.GetNewOrderNumber();
+
+                List<Order> orders = new();
+                foreach (var book in requestDto.Books)
+                {
+                    Order order = new Order()
+                    {
+                        OrderNumber = orderNumber,
+                        BookId = book.Id,
+                        Price = new Money(book.Price.Value, book.Price.Currency),
+                        PaymentDate = DateTime.UtcNow.AddHours(3),
+                        PaymentType = "Credit Cart",
+                        PaymentNumber = payment.PaymentId,
+                        CreatedAt = DateTime.UtcNow.AddHours(3)
+                    };
+                    orders.Add(order);
+                }
+
+                AppDbContext context = new();
+
+                OrderStatus orderStatus = new()
                 {
                     OrderNumber = orderNumber,
-                    BookId = book.Id,
-                    Price = new Money(book.Price.Value, book.Price.Currency),
-                    PaymentDate = DateTime.Now,
-                    PaymentType = "Credit Cart",
-                    PaymentNumber = payment.PaymentId,
-                    CreatedAt = DateTime.Now
+                    Status = OrderStatusEnum.AwaitingApproval,
+                    StatusDate = DateTime.UtcNow.AddHours(3)
                 };
-                orders.Add(order);
-            }
+                context.Orders.AddRange(orders);
+                context.OrderStatuses.Add(orderStatus);
 
-            AppDbContext context = new();
+                //Eğer kullanıcı girişi yapmışsa bu işlemi yap.
+                Models.User user = context.Users.Find(requestDto.UserId);
+                if (user is not null)
+                {
+                    var shoppingCarts = context.ShoppingCarts.Where(p => p.UserId == requestDto.UserId).ToList();
+                    context.RemoveRange(shoppingCarts);
+                }
 
-           OrderStatus orderStatus = new()
-           {
-               OrderNumber = orderNumber,
-               Status = OrderStatusEnum.AwaitingApproval,
-              StatusDate = DateTime.Now
-           };
+                context.SaveChanges();
 
-            context.OrderStatuses.Add(orderStatus);    
-            context.Orders.AddRange(orders);
-            context.SaveChanges();
-
-            string response = await MailService.SendEmailAsync(requestDto.Buyer.Email, "Siparişiniz Alındı", $@"
+                string response = await MailService.SendEmailAsync(requestDto.Buyer.Email, "Siparişiniz Alındı", $@"
                 <h1>Siparişiniz Alındı</h1>
                 <p>Sipariş numaranız: {orderNumber}</p>
                 <p>Ödeme numaranız: {payment.PaymentId}</p>
                 <p>Ödeme tutarınız: {payment.PaidPrice}</p>
-                <p>Ödeme tarihiniz: {DateTime.Now}</p>
+                <p>Ödeme tarihiniz: {DateTime.UtcNow.AddHours(3)}</p>
                 <p>Ödeme tipiniz: Kredi Kartı</p>
                 <p>Ödeme durumunuz: Onay bekliyor</p>");
+            }
+            catch (Exception ex)
+            {
+                //ödeme kırılım ayarı yapmamız lazım ki yizico ödeme iadesi yapabilsin.
+                CreateRefundRequest refundRequest = new CreateRefundRequest();
+                refundRequest.ConversationId = request.ConversationId;
+                refundRequest.Locale = Locale.TR.ToString();
+                refundRequest.PaymentTransactionId = "1";
+                refundRequest.Price = request.Price;
+                refundRequest.Ip = "85.34.78.112";
+                refundRequest.Currency =currency.ToString();
 
-            //mail göndersin
-            //smtp => mail sisteminin bir tane smtp.google.com 127.01.20.312
-            //email
-            //password
-            //port // 587 465
-            //ssl // true false
-            //html
-
-
+                Refund refund = Refund.Create(refundRequest, options);
+                return BadRequest(new { Message = "İşlem sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyiniz veya müşteri temsilcisi ile iletişime geçin!" });
+            }
+   
             return NoContent();
         }
         else
         {
             return BadRequest(payment.ErrorMessage);
         }
-
-        //status: success | failure
-        //ErrotMessage: Hata mesajı var.
     }
 
 }

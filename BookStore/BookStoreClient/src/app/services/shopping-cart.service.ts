@@ -7,6 +7,7 @@ import { PaymentModel } from '../models/payment.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from './auth.service';
 import { SetShoppingCartsModel } from '../models/set-shopping-carts.model';
+import { ErrorService } from './error.service';
 
 
 @Injectable({
@@ -24,6 +25,7 @@ export class ShoppingCartService {
     private translate: TranslateService,
     private http: HttpClient,
     private auth: AuthService,
+    private error: ErrorService,
     private spinner: NgxSpinnerService
   ) {
     this.checkLocalStoreForShoppingCarts();
@@ -40,10 +42,15 @@ export class ShoppingCartService {
       this.shoppingCarts = [];
     }
     if(localStorage.getItem("response")){
-     this.http.get<SetShoppingCartsModel[]>("https://localhost:7078/api/ShoppingCarts/GetAll/"+ this.auth.userId,).subscribe(res=> {
-       this.shoppingCarts = res
+     this.http.get<SetShoppingCartsModel[]>("https://localhost:7078/api/ShoppingCarts/GetAll/"+ this.auth.userId,).subscribe({
+      next: (res:any)=> {
+        this.shoppingCarts = res
        this.calcTotal();
-       })
+      },
+      error: (err: HttpErrorResponse)=>{
+        this.error.errorHandler(err);
+      }
+     });
      }
 
     this.calcTotal();
@@ -104,7 +111,7 @@ export class ShoppingCartService {
           this.spinner.hide();
         },
         error: (err: HttpErrorResponse) => {
-          console.log(err);
+          this.error.errorHandler(err);
           this.spinner.hide();
         }
       })
