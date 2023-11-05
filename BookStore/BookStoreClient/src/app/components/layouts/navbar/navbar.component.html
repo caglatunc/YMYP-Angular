@@ -7,10 +7,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page"></a>
+          <a class="nav-link active" aria-current="page">
+            <i class="fa-solid fa-info"></i>
+          </a>
         </li> 
       </ul>
-    <select style="width: 20%;" [(ngModel)]="language" (change)="switchLanguage($event)" class="form-control me-2" >
+    <select style="width: 20%;" [(ngModel)]="language" (change)="switchLanguage($event)" class="form-control me-2" id="language" >
       <option value="en">English</option>
       <option value="tr">Türkçe</option>
     </select>

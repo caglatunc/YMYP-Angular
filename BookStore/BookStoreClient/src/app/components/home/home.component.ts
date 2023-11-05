@@ -12,6 +12,7 @@ import { ErrorService } from 'src/app/services/error.service';
 
 
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -43,6 +44,8 @@ export class HomeComponent {
       }
       this.getCategories();
   }
+
+  
 
   addShoppingCart(book: BookModel) {
     if(localStorage.getItem("response")){
