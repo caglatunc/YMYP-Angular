@@ -15,6 +15,11 @@
     "allCategories": "All Categories",
     "addBookInShoppingCartIsSuccessful": "Book has been added successfully!",
     "noBooksInShoppingCart": "There are no books in the shopping cart!",
+    "howCanUseThisWebsite": "Would you like to discover?",
+    "wouldYouLikeToDiscover":"How can use this website?",
+    "discover":"Discover",
+    "notShowAgain":"Not show again",
+    "bookQuantityIsNotEnough":"Book out of stock!",
     "remove": {
         "doYouWantToDelete": "Do you want to delete the book from the shopping cart?",
         "cancelBtn": "Cancel",

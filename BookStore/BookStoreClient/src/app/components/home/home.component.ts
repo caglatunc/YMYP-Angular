@@ -8,6 +8,7 @@ import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { AddShoppingCartModel } from 'src/app/models/add-shopping-cart.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorService } from 'src/app/services/error.service';
+import { PopupService } from 'src/app/services/popup.service';
 
 
 
@@ -27,51 +28,67 @@ export class HomeComponent {
   newData: any[] = [];
   loaderDatas = [1, 2, 3, 4, 5, 6];
   isLoading: boolean = true;
-  
+
   constructor(
     private http: HttpClient,
     private shopping: ShoppingCartService,//HttpClient Api isteklerini yaptığımız servis
     private swal: SwallService,
-    private translate : TranslateService,
+    private translate: TranslateService,
     private auth: AuthService,
-    private error: ErrorService
-    ) {
-      //Seçilen kategoriyi hafızada saklıyoruz.
-      if(localStorage.getItem("request")){
-        const requestString: any =localStorage.getItem("request");
-        const requestObj = JSON.parse(requestString);
-        this.request= requestObj;
-      }
-      this.getCategories();
+    private error: ErrorService,
+    private popup: PopupService
+  ) {
+    //Seçilen kategoriyi hafızada saklıyoruz.
+    if (localStorage.getItem("request")) {
+      const requestString: any = localStorage.getItem("request");
+      const requestObj = JSON.parse(requestString);
+      this.request = requestObj;
+    }
+    this.getCategories();
   }
 
-  
+
 
   addShoppingCart(book: BookModel) {
-    if(localStorage.getItem("response")){
+    if (localStorage.getItem("response")) {
       const data: AddShoppingCartModel = new AddShoppingCartModel();
       data.bookId = book.id;
       data.price = book.price;
       data.quantity = 1;
       data.userId = this.auth.userId;
       this.http.post("https://localhost:7078/api/ShoppingCarts/Add", data).subscribe({
-        next: (res: any)=>{
-          this.shopping.checkLocalStoreForShoppingCarts();
-            this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res=> {
-              this.swal.callToast(res);
-        });
+        next: (res: any) => {
+          this.shopping.getAllShoppingCarts();
+          this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res => {
+            this.swal.callToast(res);        
+          });
         },
-        error: (err: HttpErrorResponse)=>{
+        error: (err: HttpErrorResponse) => {
           this.error.errorHandler(err);
         }
 
       });
-    }else{
-      this.shopping.shoppingCarts.push(book);
-      localStorage.setItem("shoppingCarts", JSON.stringify(this.shopping.shoppingCarts))
-      this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res=> {
-        this.swal.callToast(res);
-    });
+    } else {
+      if (book.quantity < 1) {
+        this.translate.get("bookQuantityIsNotEnough").subscribe(res => {
+          this.swal.callToast(res, "error");
+        });
+      } else {
+        const checkBookIsAlreadyExists=this.shopping.shoppingCarts.filter(p=> p.id == book.id)[0];
+        if(checkBookIsAlreadyExists !== undefined){
+          this.shopping.shoppingCarts.filter(p=> p.id == book.id)[0].quantity += 1;
+        }else{
+          const newBook = {...book};
+          newBook.quantity = 1;
+          this.shopping.shoppingCarts.push(newBook);
+        }
+       
+        this.shopping.calcTotal();
+        localStorage.setItem("shoppingCarts", JSON.stringify(this.shopping.shoppingCarts))
+        this.translate.get("addBookInShoppingCartIsSuccessful").subscribe(res => {
+          this.swal.callToast(res);
+        });
+      }
     }
   }
 
@@ -92,12 +109,12 @@ export class HomeComponent {
     this.http
       .post<BookModel[]>(`https://localhost:7078/api/Books/GetAll/`, this.request)
       .subscribe({
-        next: (res: any)=>{
+        next: (res: any) => {
           this.books = res;
-            this.isLoading = false;
-            localStorage.setItem("request", JSON.stringify(this.request));
+          this.isLoading = false;
+          localStorage.setItem("request", JSON.stringify(this.request));
         },
-        error: (err: HttpErrorResponse)=>{
+        error: (err: HttpErrorResponse) => {
           this.error.errorHandler(err);
         }
       })
@@ -107,12 +124,13 @@ export class HomeComponent {
     this.isLoading = true;
     this.http.get("https://localhost:7078/api/Categories/GetAll") //client api isteği
       .subscribe({
-        next:(res: any)=>{
+        next: (res: any) => {
           this.categories = res;
           this.getAll();
           this.isLoading = false;
+          this.popup.showDriverPopup();
         },
-        error: (err: HttpErrorResponse)=> {
+        error: (err: HttpErrorResponse) => {
           this.error.errorHandler(err);
         }
       });

@@ -23,7 +23,7 @@
         <div class="col-2  text-center card-image-div">
           <img class="card-image" [src]="s.coverImageUrl" alt="">
         </div>
-        <div class="col-lg-7 col-10">
+        <div class="col-lg-4 col-10">
           <div class="form-group">
             <b>{{'bookName' | translate}}</b>: {{s.title}}
           </div>
@@ -34,6 +34,15 @@
             <b>{{'summary' | translate}}</b>:{{s.summary}}
           </div>
         </div>
+
+        <div class="col-lg-3 col-12">
+          <div>
+            <button class="btn btn-danger" (click)="shopping.changeBookQuantityInShoppingCart(s.id, s.quantity-1)">-</button>
+           <p class="alert- alert-warning" [innerHTML]="s.quantity"></p>
+           <button class="btn btn-success" (click)="shopping.changeBookQuantityInShoppingCart(s.id, s.quantity+1)">+</button>
+          </div>
+        </div>
+
         <div class="col-lg-3 col-12 text-center d-flex justify-content-center" style="flex-direction: column;">
           <h5 *ngIf="language=='tr'">
             {{s.price.value | trCurrency}} {{s.price.currency}}
@@ -63,7 +72,6 @@
       </div>
 
     </div>
-
 
   </div>
 

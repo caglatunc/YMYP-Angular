@@ -14,6 +14,7 @@ public sealed class Order
     [ForeignKey("Book")]
     public int BookId { get; set; }
     public Book Book { get; set; }
+    public int Quantity { get; set; }//Siparişteki kitap sayısı
     public Money Price { get; set; }
     public DateTime CreatedAt { get; set; }//Siparişin oluşturulma tarihi
     public DateTime PaymentDate { get; set; }//Siparişin ödeme tarihi

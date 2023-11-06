@@ -20,7 +20,7 @@ public class ConfigurationsController : ControllerBase
             {
                 Title = $"Book {i}",
                 Author = $"Author {i}",
-                Summary = $"Summary {i}",
+                Summary = $"Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium facere porro vitae quas! Nam, iure? Incidunt, delectus reprehenderit quo est quae praesentium similique minus aliquid voluptates expedita dolorem nisi provident!",
                 CoverImageUrl = $"https://m.media-amazon.com/images/I/71Qde+ZerdL._AC_UF1000,1000_QL80_.jpg",
                 Price = new(i * 2, "₺"),
                 Quantity = i * 1,

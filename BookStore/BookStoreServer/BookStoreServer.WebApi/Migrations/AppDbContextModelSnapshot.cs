@@ -296,6 +296,10 @@ namespace BookStoreServer.WebApi.Migrations
                         .HasColumnType("text")
                         .HasColumnName("payment_type");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
                     b.HasKey("Id")
                         .HasName("pk_orders");
 
