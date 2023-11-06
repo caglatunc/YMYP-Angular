@@ -273,6 +273,11 @@ namespace BookStoreServer.WebApi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("book_id");
 
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("comment");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
@@ -299,6 +304,14 @@ namespace BookStoreServer.WebApi.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
                         .HasColumnName("quantity");
+
+                    b.Property<short?>("Raiting")
+                        .HasColumnType("smallint")
+                        .HasColumnName("raiting");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
                         .HasName("pk_orders");

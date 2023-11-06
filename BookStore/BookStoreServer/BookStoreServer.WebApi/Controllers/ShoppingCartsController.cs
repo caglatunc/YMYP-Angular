@@ -260,8 +260,8 @@ public sealed class ShoppingCartsController : ControllerBase
                                                
         Payment payment = Iyzipay.Model.Payment.Create(request, options);
 
-        if(payment.Status == "success")
-        {
+        //if(payment.Status == "success")
+        //{
             try
             {
                 string orderNumber = Order.GetNewOrderNumber();
@@ -282,7 +282,8 @@ public sealed class ShoppingCartsController : ControllerBase
                         PaymentDate = DateTime.UtcNow.AddHours(3),
                         PaymentType = "Credit Cart",
                         PaymentNumber = payment.PaymentId,
-                        CreatedAt = DateTime.UtcNow.AddHours(3)
+                        UserId=requestDto.UserId,
+                        CreatedAt = DateTime.UtcNow.AddHours(3),
                     };
                     orders.Add(order);
                 }
@@ -329,15 +330,15 @@ public sealed class ShoppingCartsController : ControllerBase
                 refundRequest.Currency =currency.ToString();
 
                 Refund refund = Refund.Create(refundRequest, options);
-                return BadRequest(new { Message = "İşlem sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyiniz veya müşteri temsilcisi ile iletişime geçin!" });
+                //return BadRequest(new { Message = "İşlem sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyiniz veya müşteri temsilcisi ile iletişime geçin!" });
             }
    
             return NoContent();
-        }
-        else
-        {
-            return BadRequest(payment.ErrorMessage);
-        }
+        //}
+        //else
+        //{
+        //    return BadRequest(payment.ErrorMessage);
+        //}
     }
 
 }

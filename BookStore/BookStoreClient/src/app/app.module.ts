@@ -19,6 +19,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { UnderMaintenanceComponent } from './components/under-maintenance/under-maintenance.component';
+import { OrderComponent } from './components/order/order.component';
 
 
 
@@ -37,6 +39,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ShoppingCartComponent,
     LoginComponent,
     RegisterComponent,
+    UnderMaintenanceComponent,
+    OrderComponent,
    
   ],
   imports: [

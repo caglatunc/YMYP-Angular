@@ -10,6 +10,7 @@
     "summary": "Özet",
     "apiNotAvailable":"Api şuanda meşgül",
     "apiNotFound":"Api bulunamadı",
+    "wereWorkingOn":"Üzgünüz bir hatayla karşılaştık üzerinde çalışıyoruz. Anlayışınız için teşekkür ederiz.",
     "errorStatusNotFound":"Bilinmeyen bir hata ile karşılaştık. Lütfen yönetici ile iletişime geçin!",
     "allCategories": "Tüm Kategoriler",
     "paymentIsSuccessful": "Ödeme işlemi başarılı!",

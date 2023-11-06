@@ -1,0 +1,28 @@
+<div class="card mt-1 position-relative" *ngFor="let o of orders let i = index">
+    <div class="row">
+      <div class="col-2  text-center card-image-div">
+        <img class="card-image" [src]="o.book.coverImageUrl" alt="">
+      </div>
+      <div class="col-lg-4 col-10">
+        <div class="form-group">
+          <b>{{'bookName' | translate}}</b>: {{o.book.title}}
+        </div>
+        <div class="form-group">
+          <b>{{'author' | translate}}</b>: {{o.book.author}}
+        </div>
+      </div>
+      <div class="col-lg-3 col-12">
+       
+      </div>
+
+      <div class="col-lg-3 col-12 text-center d-flex justify-content-center" style="flex-direction: column;">
+        <h5 *ngIf="language=='tr'">
+          {{o.price.value | trCurrency}} {{o.price.currency}}
+        </h5>
+        <h5 *ngIf="language=='en'">
+          {{o.price.value | currency: '':'':'1.2-2' }} {{o.price.currency}}
+        </h5>
+      </div>
+    </div>
+  
+  </div>

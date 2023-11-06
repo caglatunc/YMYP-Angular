@@ -107,15 +107,16 @@
           <div class="card-header">
             <h5 class="card-title">{{ b.title }}</h5>
             <p>{{ b.author }}</p>
+            <ul class="d-flex list-unstyled justify-content-center">
+              <li *ngFor="let c of b.categories">{{c}}</li>
+            </ul>
           </div>
           <div class="card-body detail">
-            <p class="card-text">{{ b.summary }}</p>
             <button *ngIf="b.quantity <=0" class="btn btn-danger text-center w-100" disabled type="button">
               <i class="fa-solid fa-hourglass me-1"></i>
               <span>{{'bookQuantityIsNotEnough' | translate}}</span>
             </button>
-            <button *ngIf="b.quantity >0"  iconControl
-            id="addShoppingCartBtn{{i}}"
+            <button *ngIf="b.quantity >0" iconControl id="addShoppingCartBtn{{i}}"
               class="btn btn-outline-secondary d-flex justify-content-between w-100 align-items-center"
               (click)="addShoppingCart(b)">
               <span>{{b.price.value | currency:'':'':'1.2-2'}} {{b.price.currency}}</span>
