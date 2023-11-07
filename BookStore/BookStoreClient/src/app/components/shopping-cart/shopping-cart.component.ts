@@ -62,7 +62,6 @@ export class ShoppingCartComponent {
     this.request.buyer.registrationAddress = this.request.shippingAddress.description;
     this.request.buyer.city = this.request.shippingAddress.city;
     this.request.buyer.country = this.request.shippingAddress.country;
-
     this.request.userId = this.auth.userId;
 
     this.shopping.payment(this.request, (res) => {

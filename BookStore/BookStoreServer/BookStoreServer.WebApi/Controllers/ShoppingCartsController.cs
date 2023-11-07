@@ -3,12 +3,14 @@ using BookStoreServer.WebApi.Dtos;
 using BookStoreServer.WebApi.Enums;
 using BookStoreServer.WebApi.Models;
 using BookStoreServer.WebApi.Models.ValueObjects;
+using BookStoreServer.WebApi.Options;
 using BookStoreServer.WebApi.Services;
 using Iyzipay;
 using Iyzipay.Model;
 using Iyzipay.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace BookStoreServer.WebApi.Controllers;
 [Route("api/[controller]/[action]")]
@@ -17,11 +19,15 @@ namespace BookStoreServer.WebApi.Controllers;
 public sealed class ShoppingCartsController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private readonly IyzicoOptions _iyzicoOptions;
 
-    public ShoppingCartsController(AppDbContext context)
+    public ShoppingCartsController(AppDbContext context, IOptions<IyzicoOptions> iyzicoOptions)
     {
         _context = context;
+        _iyzicoOptions = iyzicoOptions.Value;
     }
+
+
     [HttpGet("{bookId}/{quantity}")]
     public IActionResult CheckBookQuantityIsAvailable(int bookId, int quantity)
     {
@@ -143,6 +149,7 @@ public sealed class ShoppingCartsController : ControllerBase
     {
        
         List<ShoppingCart> shoppingCarts = new();
+
         foreach (var item in request)
         {
             ShoppingCart shoppingCart = new()
@@ -213,9 +220,9 @@ public sealed class ShoppingCartsController : ControllerBase
 
         //Bağlantı bilgilerini istiyor
         Iyzipay.Options options = new Iyzipay.Options();
-        options.ApiKey = "sandbox-4OAzqhdZcQazv1T4W46N3dgMYA8hArsm";
-        options.SecretKey = "sandbox-kWVjwRAEYVhxvLvt2OmCtvG5NZzyawqH";
-        options.BaseUrl = "https://sandbox-api.iyzipay.com";
+        options.ApiKey = _iyzicoOptions.ApiKey;
+        options.SecretKey = _iyzicoOptions.SecretKey;
+        options.BaseUrl = _iyzicoOptions.BaseUrl;
 
         //
         CreatePaymentRequest request = new CreatePaymentRequest();
@@ -261,84 +268,82 @@ public sealed class ShoppingCartsController : ControllerBase
         Payment payment = Iyzipay.Model.Payment.Create(request, options);
 
         //if(payment.Status == "success")
-        //{
-            try
+         //{
+        try
+        {
+            string orderNumber = Order.GetNewOrderNumber();
+
+            List<Order> orders = new();
+            foreach (var book in requestDto.Books)
             {
-                string orderNumber = Order.GetNewOrderNumber();
+                Book changeBookQuantity = _context.Books.Find(book.Id);
+                changeBookQuantity.Quantity -= book.Quantity;
+                _context.Update(changeBookQuantity);
 
-                List<Order> orders = new();
-                foreach (var book in requestDto.Books)
-                {
-                    Book changeBookQuantity = _context.Books.Find(book.Id);
-                    changeBookQuantity.Quantity -= book.Quantity;
-                    _context.Update(changeBookQuantity);
-
-                    Order order = new Order()
-                    {
-                        OrderNumber = orderNumber,
-                        BookId = book.Id,
-                        Quantity = book.Quantity,
-                        Price = new Money(book.Price.Value, book.Price.Currency),
-                        PaymentDate = DateTime.UtcNow.AddHours(3),
-                        PaymentType = "Credit Cart",
-                        PaymentNumber = payment.PaymentId,
-                        UserId=requestDto.UserId,
-                        CreatedAt = DateTime.UtcNow.AddHours(3),
-                    };
-                    orders.Add(order);
-                }
-
-                
-
-                OrderStatus orderStatus = new()
+                Order order = new()
                 {
                     OrderNumber = orderNumber,
-                    Status = OrderStatusEnum.AwaitingApproval,
-                    StatusDate = DateTime.UtcNow.AddHours(3)
+                    BookId = book.Id,
+                    Quantity = book.Quantity,
+                    Price = new Money(book.Price.Value, book.Price.Currency),
+                    PaymentDate = DateTime.UtcNow,
+                    PaymentType = "Credit Cart",
+                    PaymentNumber = payment.PaymentId,
+                    CreatedAt = DateTime.UtcNow,
+                    UserId = requestDto.UserId
                 };
-                _context.Orders.AddRange(orders);
-                _context.OrderStatuses.Add(orderStatus);
+                orders.Add(order);
+            }
 
-                //Eğer kullanıcı girişi yapmışsa bu işlemi yap.
-                Models.User user = _context.Users.Find(requestDto.UserId);
-                if (user is not null)
-                {
-                    var shoppingCarts = _context.ShoppingCarts.Where(p => p.UserId == requestDto.UserId).ToList();
-                    _context.RemoveRange(shoppingCarts);
-                }
+            OrderStatus orderStatus = new()
+            {
+                OrderNumber = orderNumber,
+                Status = OrderStatusEnum.AwaitingApproval,
+                StatusDate = DateTime.UtcNow
+            };
+            _context.Orders.AddRange(orders);
+            _context.OrderStatuses.Add(orderStatus);
 
-                _context.SaveChanges();
+            //Eğer kullanıcı girişi yapmışsa bu işlemi yap.
+            Models.User user = _context.Users.Find(requestDto.UserId);
+            if (user is not null)
+            {
+                var shoppingCarts = _context.ShoppingCarts.Where(p => p.UserId == requestDto.UserId).ToList();
+                _context.RemoveRange(shoppingCarts);
+            }
 
-                string response = await MailService.SendEmailAsync(requestDto.Buyer.Email, "Siparişiniz Alındı", $@"
+            _context.SaveChanges();
+
+            string response = await MailService.SendEmailAsync(requestDto.Buyer.Email, "Siparişiniz Alındı", $@"
                 <h1>Siparişiniz Alındı</h1>
                 <p>Sipariş numaranız: {orderNumber}</p>
                 <p>Ödeme numaranız: {payment.PaymentId}</p>
                 <p>Ödeme tutarınız: {payment.PaidPrice}</p>
-                <p>Ödeme tarihiniz: {DateTime.UtcNow.AddHours(3)}</p>
+                <p>Ödeme tarihiniz: {DateTime.UtcNow}</p>
                 <p>Ödeme tipiniz: Kredi Kartı</p>
                 <p>Ödeme durumunuz: Onay bekliyor</p>");
-            }
-            catch (Exception ex)
-            {
-                //ödeme kırılım ayarı yapmamız lazım ki yizico ödeme iadesi yapabilsin.
-                CreateRefundRequest refundRequest = new CreateRefundRequest();
-                refundRequest.ConversationId = request.ConversationId;
-                refundRequest.Locale = Locale.TR.ToString();
-                refundRequest.PaymentTransactionId = "1";
-                refundRequest.Price = request.Price;
-                refundRequest.Ip = "85.34.78.112";
-                refundRequest.Currency =currency.ToString();
+        }
+        catch (Exception ex)
+        {
+            //ödeme kırılım ayarı yapmamız lazım ki yizico ödeme iadesi yapabilsin.
+            CreateRefundRequest refundRequest = new CreateRefundRequest();
+            refundRequest.ConversationId = request.ConversationId;
+            refundRequest.Locale = Locale.TR.ToString();
+            refundRequest.PaymentTransactionId = "1";
+            refundRequest.Price = request.Price;
+            refundRequest.Ip = "85.34.78.112";
+            refundRequest.Currency = currency.ToString();
 
-                Refund refund = Refund.Create(refundRequest, options);
-                //return BadRequest(new { Message = "İşlem sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyiniz veya müşteri temsilcisi ile iletişime geçin!" });
-            }
-   
-            return NoContent();
-        //}
-        //else
-        //{
-        //    return BadRequest(payment.ErrorMessage);
-        //}
+            Refund refund = Refund.Create(refundRequest, options);
+            return BadRequest(new { Message = "İşlem sırasında bir hata oluştu ve paranızı geri iade ettik. Lütfen daha sonra tekrar deneyiniz veya müşteri temsilcisi ile iletişime geçin!" });
+        }
+
+        return NoContent();
+      // }
+       // else
+       // {
+          //  return BadRequest(payment.ErrorMessage);
+       // }
     }
 
 }

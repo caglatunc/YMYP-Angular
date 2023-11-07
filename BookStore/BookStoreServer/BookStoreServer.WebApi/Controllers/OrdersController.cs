@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreServer.WebApi.Controllers;
+[Route("api/[controller]")]
+[ApiController]
 public sealed class OrdersController : Controller
 {
    private readonly AppDbContext _context;

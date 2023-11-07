@@ -274,7 +274,6 @@ namespace BookStoreServer.WebApi.Migrations
                         .HasColumnName("book_id");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("comment");
 

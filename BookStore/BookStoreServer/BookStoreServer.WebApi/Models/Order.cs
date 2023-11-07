@@ -21,7 +21,7 @@ public sealed class Order
     public DateTime PaymentDate { get; set; }//Siparişin ödeme tarihi
     public string PaymentType { get; set; }//Ödemeyi hangi kanalla yaptığımızı tutuyoruz
     public string PaymentNumber { get; set; }//Ödeme numarası
-    public string Comment { get; set; }
+    public string? Comment { get; set; }
     public short? Raiting { get; set; }
 
 

@@ -11,7 +11,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);//AutoMapper'ý kullanab
 
 builder.Services.AddScoped<AppDbContext>();
 
-
+builder.Services.AddOptions<IyzicoOptions>().BindConfiguration("Iyzico");
 
 builder.Services.AddCors(cfr =>
 {

@@ -35,7 +35,7 @@ const routes: Routes = [
         component: UnderMaintenanceComponent,
       },
       {
-        path:"/orders",
+        path:"orders",
         component:OrderComponent
       }
      
