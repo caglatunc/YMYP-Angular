@@ -267,8 +267,8 @@ public sealed class ShoppingCartsController : ControllerBase
                                                
         Payment payment = Iyzipay.Model.Payment.Create(request, options);
 
-        //if(payment.Status == "success")
-         //{
+        if(payment.Status == "success")
+         {
         try
         {
             string orderNumber = Order.GetNewOrderNumber();
@@ -314,7 +314,7 @@ public sealed class ShoppingCartsController : ControllerBase
 
             _context.SaveChanges();
 
-            string response = await MailService.SendEmailAsync(requestDto.Buyer.Email, "Siparişiniz Alındı", $@"
+                string response = await MailService.SendEmailAsync(requestDto.Buyer.Email, "Siparişiniz Alındı", $@"
                 <h1>Siparişiniz Alındı</h1>
                 <p>Sipariş numaranız: {orderNumber}</p>
                 <p>Ödeme numaranız: {payment.PaymentId}</p>
@@ -322,7 +322,7 @@ public sealed class ShoppingCartsController : ControllerBase
                 <p>Ödeme tarihiniz: {DateTime.UtcNow}</p>
                 <p>Ödeme tipiniz: Kredi Kartı</p>
                 <p>Ödeme durumunuz: Onay bekliyor</p>");
-        }
+            }
         catch (Exception ex)
         {
             //ödeme kırılım ayarı yapmamız lazım ki yizico ödeme iadesi yapabilsin.
@@ -339,11 +339,11 @@ public sealed class ShoppingCartsController : ControllerBase
         }
 
         return NoContent();
-      // }
-       // else
-       // {
-          //  return BadRequest(payment.ErrorMessage);
-       // }
+        }
+        else
+        {
+            return BadRequest(payment.ErrorMessage);
+        }
     }
 
 }

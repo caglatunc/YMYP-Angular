@@ -110,6 +110,23 @@
             <ul class="d-flex list-unstyled justify-content-center">
               <li *ngFor="let c of b.categories">{{c}}</li>
             </ul>
+            <div>
+              <i  class="fa-star cursor font-size-lg"
+                [ngClass]="b.raiting >= 1 ? 'fa-solid text-warning': 'fa-regular'">
+              </i>
+              <i  class="fa-star cursor font-size-lg"
+                [ngClass]="(b.raiting >= 2) ? 'fa-solid text-warning': 'fa-regular'">
+              </i>
+              <i  class="fa-star cursor font-size-lg"
+                [ngClass]="(b.raiting >= 3) ? 'fa-solid text-warning': 'fa-regular'">
+              </i>
+              <i  class="fa-star cursor font-size-lg"
+                [ngClass]="(b.raiting >= 4) ? 'fa-solid text-warning': 'fa-regular'">
+              </i>
+              <i  class="fa-star cursor font-size-lg"
+                [ngClass]="(b.raiting == 5) ? 'fa-solid text-warning': 'fa-regular'">
+              </i>
+            </div>
           </div>
           <div class="card-body detail">
             <button *ngIf="b.quantity <=0" class="btn btn-danger text-center w-100" disabled type="button">

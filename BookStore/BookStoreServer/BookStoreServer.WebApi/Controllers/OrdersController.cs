@@ -1,10 +1,11 @@
 ﻿using BookStoreServer.WebApi.Context;
 using BookStoreServer.WebApi.Dtos;
+using BookStoreServer.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreServer.WebApi.Controllers;
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 [ApiController]
 public sealed class OrdersController : Controller
 {
@@ -36,11 +37,33 @@ public sealed class OrdersController : Controller
                 PaymentType = s.PaymentType,
                 Price = s.Price,
                 Quantity = s.Quantity,
-                OrderStatuses =_context.OrderStatuses.Where(p=>p.OrderNumber==s.OrderNumber).ToList()
+                OrderStatuses =_context.OrderStatuses.Where(p=>p.OrderNumber==s.OrderNumber).OrderBy(p=> p.StatusDate).ToList()
             })
             .OrderByDescending(p => p.CreatedAt)
             .ToList();
 
         return Ok(orders);
     }
+
+    [HttpPost]
+    public IActionResult SaveComment(SaveCommentDto request)
+    {
+        Order order = _context.Orders.Find(request.OrderId);
+        if(order is null)
+        {
+            throw new Exception("Sipariş bulunamadı.");
+        }
+
+        order.Comment = request.Comment;
+        order.Raiting = request.Raiting;
+        _context.SaveChanges();
+
+        return NoContent();
+    }
 }
+
+//Obje istiyoruz, içerisindeki propertylerin hepsini tek tek yazmak yerine bu şekilde kullanabiliriz.
+public sealed record SaveCommentDto( 
+    int OrderId,//Parametre olarak benden int OrderId istesin, hangi siparişse onu bulalım.
+    string Comment,
+    short Raiting);

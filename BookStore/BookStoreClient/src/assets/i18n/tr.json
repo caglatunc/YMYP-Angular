@@ -105,6 +105,18 @@
             "password":"Şifre",
             "signUpBtn":"Kayıt Ol",
             "gotoLoginBtn":"Hesabınız var mı? Giriş yapmak için buraya tıklayınız."
-        }
+        },
+        "AwaitingApproval":"Onay Bekliyor", 
+        "BeingPrepared":"Hazırlanıyor",
+        "InTransit" : "Kargoda", 
+        "Deliverid" : "Teslim Edildi",
+        "Rejected" : "Reddedildi", 
+        "Returned": "İade Edildi",
+        "doComment":"Yorum Yap",
+        "return":"İade Et",
+        "comment":"Yorum",
+        "raiting":"Yıldız",
+        "close":"Kapat",
+        "save":"Kaydet"
     }
         

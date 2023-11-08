@@ -5,6 +5,7 @@ using BookStoreServer.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace BookStoreServer.WebApi.Controllers;
 
 [Route("api/[controller]/[action]")]
@@ -56,6 +57,8 @@ public class BooksController : ControllerBase
                                 .Include(p => p.Category)
                                 .Select(s => s.Category.Name)
                                 .ToList();
+            var raiting = _context.Orders.Where(p => p.BookId == book.Id && p.Raiting != null).Average(p=> p.Raiting);
+            bookDto.Raiting = (short)(raiting == null ? 0 : Convert.ToInt16(Math.Round((decimal)raiting)));
 
             //var bookDto = new BookDto()
             //{

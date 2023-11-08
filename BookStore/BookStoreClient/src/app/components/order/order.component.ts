@@ -15,6 +15,8 @@ import { ErrorService } from 'src/app/services/error.service';
 export class OrderComponent {
 orders:OrderModel[]=[];
 language:string = "en";
+orderStatusEnum = OrderStatusEnum;
+selectedOrder: OrderModel = new OrderModel();
 
 constructor(
   private http: HttpClient,
@@ -32,7 +34,7 @@ constructor(
 
 getAll(){
  this.auth.isAuthentication();
- this.http.get("https://localhost:7078/api/Orders/" + this.auth.userId).subscribe({
+ this.http.get("https://localhost:7078/api/Orders/GetAllByUserId/" + this.auth.userId).subscribe({
   next:(res:any)=> {
 this.orders = res;
   },
@@ -41,25 +43,39 @@ this.orders = res;
   }
  })
 }
-checkOrderIsRejected(order: OrderModel){
-  for(let o of order.orderStatuses){
-   if(o.status == OrderStatusEnum.Rejected){
-      return true;
-   } 
-  }
-  return false;
-}
-checkOrderIsReturned(order: OrderModel){
-  for(let o of order.orderStatuses){
-   if(o.status == OrderStatusEnum.Returned){
-      return true;
-   } 
-  }
-  return false;
+
+translateOrderStatus(status: string){
+ return this.translate.get(status)
 }
 
+hasTheReturnPeriodPassed(statusDate: string){
+  const returnPeriod = 14; // 14 gün
+    const statusDateObj = new Date(statusDate);
+    const currentDate = new Date();
+
+    // statusDate'den itibaren geçen zamanın milisaniye cinsinden hesaplanması
+    const timeDiff = currentDate.getTime() - statusDateObj.getTime();
+
+    // Zaman farkının gün cinsinden hesaplanması
+    const diffDays = timeDiff / (1000 * 3600 * 24);
+
+    // 14 günden az ise true, değilse false dön
+    return diffDays < returnPeriod;
+}
+selectedOrderForComment(order: OrderModel){
+  this.selectedOrder = {...order};
 }
 
-
-
-
+saveComment(){
+  this.http.post("https://localhost:7078/api/Orders/SaveComment", {orderId: this.selectedOrder.id, comment: this.selectedOrder.comment, raiting: this.selectedOrder.raiting}).subscribe({
+    next:(res:any)=> {
+      const el = document.getElementById("commentModalCloseBtn");
+      el?.click();
+      this.getAll();
+    },
+    error:(err:HttpErrorResponse)=>{
+      this.err.errorHandler(err);
+    }
+  })
+}
+}

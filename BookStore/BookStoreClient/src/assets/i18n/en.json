@@ -85,5 +85,17 @@
         "password": "Password",
         "signUpBtn": "Sign Up",
         "gotoLoginBtn": "Already have an account? Sign in now!"
-    }
+    },
+    "AwaitingApproval":"AwaitingApproval", 
+    "BeingPrepared":"BeingPrepared",
+    "InTransit" : "InTransit", 
+    "Deliverid" : "Deliverid",
+    "Rejected" : "Rejected", 
+    "Returned": "Returned",
+    "doComment":"Post Comment",
+    "return":"Return",
+    "comment":"Comment",
+    "raiting":"Raiting",
+    "close":"Close",
+    "save":"Save"
 }

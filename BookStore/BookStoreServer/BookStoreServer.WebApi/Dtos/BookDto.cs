@@ -16,4 +16,5 @@ public class BookDto
     public string ISBN { get; set; } = string.Empty;
     public DateTime CreateAt { get; set; } = DateTime.Now;
     public List<string> Categories { get; set; }
+    public short Raiting { get; set; } 
 }
