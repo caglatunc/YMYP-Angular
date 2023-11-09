@@ -145,7 +145,7 @@ public sealed class ShoppingCartsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult SetShoppingCartsFromLocalStorage(List<SetShoppingCartsDto> request)
+    public IActionResult ShoppingCartsFromLocalStorage(List<SetShoppingCartsDto> request)
     {
        
         List<ShoppingCart> shoppingCarts = new();

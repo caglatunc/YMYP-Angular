@@ -1,16 +1,21 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BookModel, Money } from 'src/app/models/book.model';
 import { OrderStatusEnum } from 'src/app/models/order-status-enum';
 import { OrderModel } from 'src/app/models/order.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorService } from 'src/app/services/error.service';
+import { TrCurrencyPipe } from 'tr-currency';
+import { FormsModule } from '@angular/forms';
+import { NgFor, NgIf, NgClass, AsyncPipe, CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+    selector: 'app-order',
+    templateUrl: './order.component.html',
+    styleUrls: ['./order.component.css'],
+    standalone: true,
+    imports: [NgFor, NgIf, FormsModule, NgClass, AsyncPipe, CurrencyPipe, DatePipe, TrCurrencyPipe, TranslateModule]
 })
 export class OrderComponent {
 orders:OrderModel[]=[];

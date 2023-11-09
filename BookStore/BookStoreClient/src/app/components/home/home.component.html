@@ -7,7 +7,8 @@
 </div>
 
 <!-- Loading -->
-<div class="row mt-4" *ngIf="isLoading">
+@if (isLoading) {
+<div class="row mt-4">
   <div class="col-lg-3 col-md-4 col-sm-6 col-12">
     <div class="card">
       <div class="card-header">
@@ -22,8 +23,10 @@
             placeholder="{{ 'search' | translate }}" />
         </div>
         <ul class="categories placeholder-glow">
-          <li class="category loader-category placeholder " *ngFor="let l of loaderDatas" disabled>
+          @for (l of loaderDatas; track l) {
+  <li class="category loader-category placeholder " disabled>
           </li>
+}
         </ul>
       </div>
     </div>
@@ -37,7 +40,8 @@
         class="form-control" placeholder="{{ 'search' | translate }}" />
     </div>
     <div class="row">
-      <div class="col-xl-4 col-md-6 col-12 mb-2" *ngFor="let l of loaderDatas">
+      @for (l of loaderDatas; track l) {
+  <div class="col-xl-4 col-md-6 col-12 mb-2">
         <div class="card text-center">
           <div class="card-body placeholder-glow">
             <div class="card-img-top mt-2 loading placeholder"></div>
@@ -56,12 +60,14 @@
           </div>
         </div>
       </div>
+}
     </div>
   </div>
 </div>
+}
 
-<!-- Content -->
-<div class="row mt-4" *ngIf="!isLoading">
+@else {
+<div class="row mt-4">
   <!-- Kategoriler -->
   <div class="col-lg-3 col-md-4 col-sm-6 col-12">
     <div class="card">
@@ -80,10 +86,12 @@
           <li class="category" (click)="changeCategory(null)" [ngClass]="request.categoryId === null ? 'active' : ''">
             {{ "allCategories" | translate }}
           </li>
-          <li class="category" (click)="changeCategory(c.id)" [ngClass]="request.categoryId === c.id ? 'active' : ''"
-            *ngFor="let c of categories | categoryPipe : searchCategory">
+          @for (c of categories | categoryPipe : searchCategory; track c) {
+  <li class="category" (click)="changeCategory(c.id)" [ngClass]="request.categoryId === c.id ? 'active' : ''"
+           >
             {{ c.name | translate }}
           </li>
+}
         </ul>
       </div>
     </div>
@@ -99,7 +107,8 @@
         class="form-control" placeholder="{{ 'search' | translate }}" />
     </div>
     <div class="row" style="position: relative;">
-      <div class="col-xl-4 col-md-6 col-12 mb-2" id="book{{i}}" zoom *ngFor="let b of books let i = index">
+      @for (b of books;track b) {
+  <div class="col-xl-4 col-md-6 col-12 mb-2" id="book{{$index}}" zoom>
         <div class="card text-center">
           <div class="card-body">
             <img [src]="b.coverImageUrl" class="card-img-top mt-2" />
@@ -108,7 +117,9 @@
             <h5 class="card-title">{{ b.title }}</h5>
             <p>{{ b.author }}</p>
             <ul class="d-flex list-unstyled justify-content-center">
-              <li *ngFor="let c of b.categories">{{c}}</li>
+              @for (c of b.categories; track c) {
+  <li>{{c}}</li>
+}
             </ul>
             <div>
               <i  class="fa-star cursor font-size-lg"
@@ -129,23 +140,29 @@
             </div>
           </div>
           <div class="card-body detail">
-            <button *ngIf="b.quantity <=0" class="btn btn-danger text-center w-100" disabled type="button">
+            @if (b.quantity <=0) {
+<button class="btn btn-danger text-center w-100" disabled type="button">
               <i class="fa-solid fa-hourglass me-1"></i>
               <span>{{'bookQuantityIsNotEnough' | translate}}</span>
             </button>
-            <button *ngIf="b.quantity >0" iconControl id="addShoppingCartBtn{{i}}"
+}
+            @if (b.quantity >0) {
+<button iconControl id="addShoppingCartBtn{{$index}}"
               class="btn btn-outline-secondary d-flex justify-content-between w-100 align-items-center"
               (click)="addShoppingCart(b)">
               <span>{{b.price.value | currency:'':'':'1.2-2'}} {{b.price.currency}}</span>
               <i class="fa-solid fa-cart-shopping"></i>
             </button>
+}
           </div>
 
         </div>
       </div>
+}
     </div>
 
     <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
       (scrolled)="feedData()"></div>
   </div>
 </div>
+}

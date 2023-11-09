@@ -3,21 +3,28 @@ import { Component } from '@angular/core';
 import { RequestModel } from '../../models/request.model';
 import { BookModel } from '../../models/book.model';
 import { SwallService } from '../../services/swall.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { AddShoppingCartModel } from 'src/app/models/add-shopping-cart.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { PopupService } from 'src/app/services/popup.service';
+import { CategoryPipe } from '../../pipes/category.pipe';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { IconControlDirective } from '../../directives/icon-control.directive';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor, NgClass, CurrencyPipe } from '@angular/common';
 
 
 
 
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
+    standalone: true,
+    imports: [NgIf, FormsModule, NgFor, IconControlDirective, NgClass, InfiniteScrollModule, CurrencyPipe, TranslateModule, CategoryPipe]
 })
 export class HomeComponent {
   books: BookModel[] = [];

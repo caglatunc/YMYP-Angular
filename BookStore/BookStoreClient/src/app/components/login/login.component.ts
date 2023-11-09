@@ -1,15 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NgForm, FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { SetShoppingCartsModel } from 'src/app/models/set-shopping-carts.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: true,
+    imports: [FormsModule, RouterLink, TranslateModule]
 })
 export class LoginComponent {
 

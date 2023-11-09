@@ -1,7 +1,8 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[iconControl]'
+    selector: '[iconControl]',
+    standalone: true
 })
 export class IconControlDirective {
 

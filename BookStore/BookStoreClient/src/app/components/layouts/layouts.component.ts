@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
 import { driver } from "driver.js";
 import { PopupService } from 'src/app/services/popup.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf, NgStyle } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @Component({
-  selector: 'app-layouts',
-  templateUrl: './layouts.component.html',
-  styleUrls: ['./layouts.component.css']
+    selector: 'app-layouts',
+    templateUrl: './layouts.component.html',
+    styleUrls: ['./layouts.component.css'],
+    standalone: true,
+    imports: [NavbarComponent, RouterOutlet, NgIf, NgStyle, TranslateModule]
 })
 export class LayoutsComponent {
   
