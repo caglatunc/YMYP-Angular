@@ -1,168 +1,593 @@
-<div class="card mt-3">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h5>{{ "homePage" | translate }}</h5>
-    <div>
-    </div>
-  </div>
-</div>
-
-<!-- Loading -->
 @if (isLoading) {
-<div class="row mt-4">
-  <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-    <div class="card">
-      <div class="card-header">
-        <h3>{{ "categories" | translate }}</h3>
-      </div>
-      <div class="card-body">
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-          <input [(ngModel)]="searchCategory" type="search" class="form-control"
-            placeholder="{{ 'search' | translate }}" />
-        </div>
-        <ul class="categories placeholder-glow">
-          @for (l of loaderDatas; track l) {
-  <li class="category loader-category placeholder " disabled>
-          </li>
-}
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-9 col-md-8 col-sm-6 col-12">
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </span>
-      <input [(ngModel)]="request.search" (keydown.enter)="getAll()" (search)="getAll()" type="search"
-        class="form-control" placeholder="{{ 'search' | translate }}" />
-    </div>
-    <div class="row">
-      @for (l of loaderDatas; track l) {
-  <div class="col-xl-4 col-md-6 col-12 mb-2">
-        <div class="card text-center">
-          <div class="card-body placeholder-glow">
-            <div class="card-img-top mt-2 loading placeholder"></div>
-          </div>
-          <div class="card-header placeholder-glow">
-            <h5 class="card-title"></h5>
-            <p class="placeholder"></p>
-          </div>
-          <div class="card-body placeholder-glow">
-            <p class="card-text placeholder"></p>
-            <button iconControl disabled
-              class="btn btn-outline-secondary d-flex placeholder justify-content-between w-100 align-items-center loading">
-              <span></span>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-}
-    </div>
-  </div>
-</div>
-}
 
+}
 @else {
-<div class="row mt-4">
-  <!-- Kategoriler -->
-  <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-    <div class="card">
-      <div class="card-header" id="categories">
-        <h3>{{ "categories" | translate }}</h3>
-      </div>
-      <div class="card-body">
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-          <input [(ngModel)]="searchCategory" type="search" class="form-control"
-            placeholder="{{ 'search' | translate }}" />
+<section class="header">
+    <div class="main">
+        <div class="main_tag">
+            <h1>{{'welcomeTo' | translate}}<br><span>{{'bookStore' | translate}}</span></h1>
+            <p>
+                {{'welcomeToDescription' | translate}}
+            </p>
         </div>
-        <ul class="categories">
-          <li class="category" (click)="changeCategory(null)" [ngClass]="request.categoryId === null ? 'active' : ''">
-            {{ "allCategories" | translate }}
-          </li>
-          @for (c of categories | categoryPipe : searchCategory; track c) {
-  <li class="category" (click)="changeCategory(c.id)" [ngClass]="request.categoryId === c.id ? 'active' : ''"
-           >
-            {{ c.name | translate }}
-          </li>
-}
-        </ul>
-      </div>
+        <div class="main_img">
+            <img src="/assets/image/table.png">
+        </div>
     </div>
-  </div>
+</section>
 
-  <!-- Kitaplar -->
-  <div class="col-lg-9 col-md-8 col-sm-6 col-12 ">
-    <div class="input-group mb-3" id="bookSearch">
-      <span class="input-group-text" id="basic-addon1">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </span>
-      <input [(ngModel)]="request.search" (keydown.enter)="getAll()" (search)="getAll()" type="search"
-        class="form-control" placeholder="{{ 'search' | translate }}" />
-    </div>
-    <div class="row" style="position: relative;">
-      @for (b of books;track b) {
-  <div class="col-xl-4 col-md-6 col-12 mb-2" id="book{{$index}}" zoom>
-        <div class="card text-center">
-          <div class="card-body">
-            <img [src]="b.coverImageUrl" class="card-img-top mt-2" />
-          </div>
-          <div class="card-header">
-            <h5 class="card-title">{{ b.title }}</h5>
-            <p>{{ b.author }}</p>
-            <ul class="d-flex list-unstyled justify-content-center">
-              @for (c of b.categories; track c) {
-  <li>{{c}}</li>
-}
-            </ul>
-            <div>
-              <i  class="fa-star cursor font-size-lg"
-                [ngClass]="b.raiting >= 1 ? 'fa-solid text-warning': 'fa-regular'">
-              </i>
-              <i  class="fa-star cursor font-size-lg"
-                [ngClass]="(b.raiting >= 2) ? 'fa-solid text-warning': 'fa-regular'">
-              </i>
-              <i  class="fa-star cursor font-size-lg"
-                [ngClass]="(b.raiting >= 3) ? 'fa-solid text-warning': 'fa-regular'">
-              </i>
-              <i  class="fa-star cursor font-size-lg"
-                [ngClass]="(b.raiting >= 4) ? 'fa-solid text-warning': 'fa-regular'">
-              </i>
-              <i  class="fa-star cursor font-size-lg"
-                [ngClass]="(b.raiting == 5) ? 'fa-solid text-warning': 'fa-regular'">
-              </i>
+<!--Banner Sales-->
+<div class="banner_sales">
+</div>
+
+<!--Bestseller-->
+<div id="bestseller" class="bestseller">
+    <h1>{{'bestseller' | translate}}</h1>
+    <div class="arrivals_box">
+        <div class="arrivals_card" *ngFor="let bestseller of bestsellers">
+            <div class="arrivals_image">
+                <img [src]="bestseller.coverImageUrl">
             </div>
-          </div>
-          <div class="card-body detail">
-            @if (b.quantity <=0) {
-<button class="btn btn-danger text-center w-100" disabled type="button">
-              <i class="fa-solid fa-hourglass me-1"></i>
-              <span>{{'bookQuantityIsNotEnough' | translate}}</span>
-            </button>
-}
-            @if (b.quantity >0) {
-<button iconControl id="addShoppingCartBtn{{$index}}"
-              class="btn btn-outline-secondary d-flex justify-content-between w-100 align-items-center"
-              (click)="addShoppingCart(b)">
-              <span>{{b.price.value | currency:'':'':'1.2-2'}} {{b.price.currency}}</span>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </button>
-}
-          </div>
-
+            <div class="arrivals_tag">
+                <p>{{ bestseller.title }}</p>
+                <div class="arrivals_rating">
+                    <i class="fa-solid fa-star" *ngIf="bestseller.raiting >= 1"></i>
+                    <i class="fa-solid fa-star" *ngIf="bestseller.raiting >= 2"></i>
+                    <i class="fa-solid fa-star" *ngIf="bestseller.raiting >= 3"></i>
+                    <i class="fa-solid fa-star" *ngIf="bestseller.raiting >= 4"></i>
+                    <i class="fa-solid fa-star" *ngIf="bestseller.raiting >= 5"></i>
+                </div>
+                <a href="#" class="arrivals_btn">{{'learnMoreBtn' | translate}}</a>
+            </div>
         </div>
-      </div>
-}
-    </div>
+        <!-- 
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_2.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div>
 
-    <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
-      (scrolled)="feedData()"></div>
-  </div>
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_3.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_4.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_5.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_6.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_7.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_8.webp">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_9.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="/assets/image/arrival_10.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="#" class="arrivals_btn">Learn More</a>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<!--Books-->
+<div id="books" class="featured_books">
+    <h1>{{'featuredBooks' |translate}}</h1>
+    <div class="work-container">
+        <div class="slider-button" (click)="leftSlider()">&#9664;</div>
+        <div class="work-list">
+            <div class="work">
+                <img src="/assets/image/book_1.jpg">
+                <div class="layer">
+                    <h3>
+                        {{'featuredBook' | translate}}
+                    </h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_2.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_3.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_4.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_5.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_6.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_9.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_11.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_5.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_2.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/assets/image/book_1.jpg">
+                <div class="layer">
+                    <h3> {{'featuredBook' | translate}}</h3>
+                    <br>
+                    <p class="author">Jonnie Deep</p>
+                    <br>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <br>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus
+                        iure
+                        distinctio!</p>
+                    <a href="#" class="btn">{{'addCartBtn' | translate }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="slider-button" (click)="rightSlider()">&#9654;</div>
+    </div>
+</div>
+
+<!--Banner-->
+
+<div class="banner">
+
+</div>
+
+<!--reviews-->
+
+<div id="reviews" class="reviews">
+    <h1>
+        {{'reviews' | translate}}
+        <i class="fa-regular fa-comments"></i>
+    </h1>
+
+    <div class="review_box">
+
+        <div class="review_card">
+            <i class="fa-solid fa-quote-right"></i>
+            <div class="card_top">
+                <img src="/assets/image/review_1.png">
+            </div>
+            <div class="card">
+                <h2>John Deo</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus iure
+                </p>
+                <div class="review_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="review_card">
+            <i class="fa-solid fa-quote-right"></i>
+            <div class="card_top">
+                <img src="/assets/image/review_2.png">
+            </div>
+            <div class="card">
+                <h2>Linda Nayrobe</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus iure
+                    distinctio! Eos dolorem quam, nisi amet saepe totam, quas quidem laboriosam dolore,
+                </p>
+                <div class="review_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="review_card">
+            <i class="fa-solid fa-quote-right"></i>
+            <div class="card_top">
+                <img src="/assets/image/review_3.png">
+            </div>
+            <div class="card">
+                <h2>Tobby Krats</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus iure
+                    distinctio! Eos dolorem quam, nisi amet saepe totam, quas quidem laboriosam dolore,
+                    tenetur itaque nostrum voluptas excepturi aut.
+                </p>
+                <div class="review_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="review_card">
+            <i class="fa-solid fa-quote-right"></i>
+            <div class="card_top">
+                <img src="/assets/image/review_4.png">
+            </div>
+            <div class="card">
+                <h2>Tina Mateo</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus iure
+                    distinctio! Eos dolorem quam, nisi amet saepe totam, quas quidem laboriosam dolore,
+                    tenetur itaque nostrum voluptas excepturi aut.
+                </p>
+                <div class="review_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="review_card">
+            <i class="fa-solid fa-quote-right"></i>
+            <div class="card_top">
+                <img src="/assets/image/review_3.png">
+            </div>
+            <div class="card">
+                <h2>Tonny Stark</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus iure
+                    distinctio! Eos dolorem quam, nisi amet saepe totam, quas quidem laboriosam dolore,
+                    tenetur itaque nostrum voluptas excepturi aut.
+                </p>
+                <div class="review_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="review_card">
+            <i class="fa-solid fa-quote-right"></i>
+            <div class="card_top">
+                <img src="/assets/image/rte_profile.png">
+            </div>
+            <div class="card">
+                <h2>Soldier Born</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus iure
+                    distinctio! Eos dolorem quam, nisi amet saepe totam, quas quidem laboriosam dolore,
+                    tenetur itaque nostrum voluptas excepturi aut.
+                </p>
+                <div class="review_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="review_card">
+            <i class="fa-solid fa-quote-right"></i>
+            <div class="card_top">
+                <img src="/assets/image/db_profile.png">
+            </div>
+            <div class="card">
+                <h2>State Garden</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus iure
+                    distinctio! Eos dolorem quam, nisi amet saepe totam, quas quidem laboriosam dolore,
+                    tenetur itaque nostrum voluptas excepturi aut.
+                </p>
+                <div class="review_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="review_card">
+            <i class="fa-solid fa-quote-right"></i>
+            <div class="card_top">
+                <img src="/assets/image/review_2.png">
+            </div>
+            <div class="card">
+                <h2>Jane Blanc</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus eos doloribus iure
+                    distinctio! Eos dolorem quam, nisi amet saepe totam, quas quidem laboriosam dolore,
+                    tenetur itaque nostrum voluptas excepturi aut.
+                </p>
+                <div class="review_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Services-->
+<div class="services">
+    <div class="services_box">
+        <div class="services_card">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h3>{{'fastDelivery' |translate}}</h3>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            </p>
+        </div>
+        <div class="services_card">
+            <i class="fa-solid fa-headset"></i>
+            <h3>{{'24x7Services' | translate}}</h3>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            </p>
+        </div>
+        <div class="services_card">
+            <i class="fa-solid fa-tag"></i>
+            <h3>{{'bestDeal' | translate}}</h3>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            </p>
+        </div>
+        <div class="services_card">
+            <i class="fa-solid fa-lock"></i>
+            <h3>{{'securePayment' | translate}}</h3>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            </p>
+        </div>
+    </div>
 </div>
 }

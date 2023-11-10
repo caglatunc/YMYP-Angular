@@ -117,6 +117,29 @@
         "comment":"Yorum",
         "raiting":"Yıldız",
         "close":"Kapat",
-        "save":"Kaydet"
+        "save":"Kaydet",
+        "navbar": {
+            "myBookStore": "Book Store",
+            "searchBookAuthor": "kitap ya da yazar ara"
+        },
+        "welcomeTo": "Hoşgeldiniz!",
+        "bookStore":"",
+        "welcomeToDescription":"Merhaba! Kitaplarla dolu bu dünyada sizi ağırlamaktan dolayı büyük bir mutluluk duyuyoruz.Her türlü okuma zevkine hitap eden kitaplarımızı keşfedin ve sizi düşündüren, sürükleyen hikayelerle tanışın. Keyifli alışverişler dileriz! ",
+        "bestseller":"Çok Satanlar",
+        "learnMoreBtn":"Daha Fazla Bilgi",
+        "featuredBooks":"Öne Çıkan Kitaplar",
+        "featuredBook":"Öne Çıkan Kitap",
+        "addCartBtn":"Sepete Ekle",
+        "reviews":"Yorumlar",
+        "fastDelivery":"Hızlı Teslimat",
+        "24x7Services":"7x24 Hizmet",
+        "bestDeal":"En İyi Fiyat",
+        "securePayment":"Güvenli Ödeme",
+        "footerDescription":" İletişim bilgilerimiz ve sosyal medya hesaplarımız aracılığıyla bize ulaşabilir, takip edebilir ve haber bültenine abone olarak en güncel haberleri alabilirsiniz.",
+        "contactInfo":"İletişim Bilgileri",
+        "followUs":"Bizi Takip Edin",
+        "newsletter":"Haber Bülteni",
+        "placeholder":"Mail Adresinizi Giriniz",
+        "subscribeBtn":"Abone Ol"
     }
         

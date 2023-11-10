@@ -97,5 +97,28 @@
     "comment":"Comment",
     "raiting":"Raiting",
     "close":"Close",
-    "save":"Save"
+    "save":"Save",
+    "navbar": {
+        "myBookStore": "Book Store",
+        "searchBookAuthor": "search book or author"
+    },
+
+      "welcomeTo":"Welcome to",
+      "bookStore":"Book Store",
+      "welcomeToDescription":"Hello! We are thrilled to welcome you to this world filled with books. Explore our books that cater to every reading taste and discover engaging stories that will captivate your thoughts. Wishing you delightful shopping!",
+      "bestseller":"Bestseller",
+      "learnMoreBtn":"Learn More",
+      "featuredBooks":"Featured Books",
+      "addCartBtn":"Add Cart",
+      "reviews":"Reviews",
+      "fastDelivery":"Fast Delivery",
+      "24x7Services":"24x7 Services",
+      "bestDeal":"Best Deal",
+      "securePayment":"Secure Payment",
+      "footerDescription":"We are here to enrich your reading experience by carefully selecting the most special books for you. You can reach us through our contact information and social media accounts, follow us, and subscribe to the newsletter to receive the latest updates. Wishing you delightful shopping!",
+      "contactInfo":"Contact Info",
+      "followUs":"Follow Us",
+      "newsletter":"Newsletter",
+      "placeholder":"Enter your email address",
+      "subscribeBtn":"Subscribe"
 }

@@ -2,6 +2,7 @@
 -- Sipariþi Ýptal Etme
 -- Profilim Sayfasý var
 -- Not: Api Çalýþmadýðýnda Eðer hata sayfasýna düþerse kendi kendine sayfayý yenilenip duruyor. Bu hataya bak!
+Buraya Not: Bu hata0 hatasý aldýðýmýzda location ile sayfaya atladýðýmýz için oluyor. Roting ile yapýnca da modal lar kapanmýyor! Bun bak...
 -- Google Login 
 -- Þifremi Unuttum
 -- Mail Onayý

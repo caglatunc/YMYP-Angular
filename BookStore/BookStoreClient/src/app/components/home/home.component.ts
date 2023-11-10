@@ -14,10 +14,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { IconControlDirective } from '../../directives/icon-control.directive';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor, NgClass, CurrencyPipe } from '@angular/common';
-
-
-
-
+import { BestsellerModel } from 'src/app/models/bestseller.model';
 
 @Component({
     selector: 'app-home',
@@ -35,6 +32,7 @@ export class HomeComponent {
   newData: any[] = [];
   loaderDatas = [1, 2, 3, 4, 5, 6];
   isLoading: boolean = true;
+  bestsellers: BestsellerModel[] = [];
 
   constructor(
     private http: HttpClient,
@@ -52,9 +50,23 @@ export class HomeComponent {
       this.request = requestObj;
     }
     this.getCategories();
+
+    this.getBestsellers();
   }
 
 
+  getBestsellers() {
+    this.http.get<BestsellerModel[]>('https://localhost:7078/api/Home/Bestsellers/').subscribe({
+      next: (res: any) => {
+        this.bestsellers = res;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error.errorHandler(err);
+      }
+    });
+  }
+ 
+ 
 
   addShoppingCart(book: BookModel) {
     if (localStorage.getItem("response")) {
@@ -141,6 +153,22 @@ export class HomeComponent {
           this.error.errorHandler(err);
         }
       });
+  }
+
+  leftSlider() {
+    const workList:any = document.querySelector(".work-list");
+    const slideAmount = 295;  
+    workList.scrollLeft -= slideAmount * 1;
+    workList.scrollLeft = Math.max(0, workList.scrollLeft);
+  }
+
+  rightSlider(){
+    const workList:any = document.querySelector(".work-list");
+    const slideAmount = 295; 
+    const maxScroll = slideAmount * (11) -5;
+    workList.scrollLeft += slideAmount * 1;
+    workList.scrollLeft = Math.min(maxScroll, workList.scrollLeft);
+    
   }
 
 }
