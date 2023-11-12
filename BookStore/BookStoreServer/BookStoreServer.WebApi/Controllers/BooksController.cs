@@ -84,6 +84,13 @@ public class BooksController : ControllerBase
         }
         return Ok(requestDto);
     }
+
+    [HttpGet("{id")]
+    public IActionResult GetById(int id)
+    {
+        var book = _context.Books.Find(id);
+        return Ok(book);
+    }
 }
 
 

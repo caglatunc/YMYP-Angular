@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UnderMaintenanceComponent } from './components/under-maintenance/under-maintenance.component';
 import { OrderComponent } from './components/order/order.component';
+import BookDetailComponent from './components/book-detail/book-detail.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
       {
         path:"orders",
         component:OrderComponent
+      },
+      {
+        path:"book-detail/:value",
+        component:BookDetailComponent
       }
      
     ]

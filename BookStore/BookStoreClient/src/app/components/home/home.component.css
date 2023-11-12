@@ -17,3 +17,10 @@
 .arrivals_btn {
     margin-top: 10px;
 }
+.cover-image{
+    width: 190px;
+    display: inline;  
+}
+.work{
+    background-color: transparent;
+}

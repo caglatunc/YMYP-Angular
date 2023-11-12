@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RequestModel } from '../../models/request.model';
 import { BookModel } from '../../models/book.model';
 import { SwallService } from '../../services/swall.service';
@@ -15,15 +15,17 @@ import { IconControlDirective } from '../../directives/icon-control.directive';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor, NgClass, CurrencyPipe } from '@angular/common';
 import { BestsellerModel } from 'src/app/models/bestseller.model';
+import { OrderModel } from 'src/app/models/order.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css'],
     standalone: true,
-    imports: [NgIf, FormsModule, NgFor, IconControlDirective, NgClass, InfiniteScrollModule, CurrencyPipe, TranslateModule, CategoryPipe]
+    imports: [NgIf, FormsModule, NgFor, IconControlDirective, NgClass, InfiniteScrollModule, CurrencyPipe, TranslateModule, CategoryPipe, RouterLink]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   books: BookModel[] = [];
   categories: any = [];
   pageNumbers: number[] = [];
@@ -32,7 +34,9 @@ export class HomeComponent {
   newData: any[] = [];
   loaderDatas = [1, 2, 3, 4, 5, 6];
   isLoading: boolean = true;
-  bestsellers: BestsellerModel[] = [];
+  bestsellers: BookModel[] = [];
+  newBooks: BookModel[] = [];
+  lastComments: OrderModel[] = [];
 
   constructor(
     private http: HttpClient,
@@ -49,14 +53,18 @@ export class HomeComponent {
       const requestObj = JSON.parse(requestString);
       this.request = requestObj;
     }
+    
+  }
+  ngOnInit(): void {
     this.getCategories();
-
     this.getBestsellers();
+    this.getNewBooks();
+    this.getLastComments()
   }
 
 
   getBestsellers() {
-    this.http.get<BestsellerModel[]>('https://localhost:7078/api/Home/Bestsellers/').subscribe({
+    this.http.get<BookModel[]>('https://localhost:7078/api/Home/Bestsellers/').subscribe({
       next: (res: any) => {
         this.bestsellers = res;
       },
@@ -65,7 +73,28 @@ export class HomeComponent {
       }
     });
   }
+
+  getNewBooks() {
+    this.http.get<BookModel[]>('https://localhost:7078/api/Home/GetNewBooks/').subscribe({
+      next: (res: any) => {
+        this.newBooks = res;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error.errorHandler(err);
+      }
+    });
+  }
  
+  getLastComments() {
+    this.http.get<BestsellerModel[]>('https://localhost:7082/api/Home/GetLastComments/').subscribe({
+      next: (res: any) => {
+        this.lastComments = res;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error.errorHandler(err);
+      }
+    });
+  }
  
 
   addShoppingCart(book: BookModel) {
