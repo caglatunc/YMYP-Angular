@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gcgHRIZ8KzuBuMYhURQICv4vnlj3PNMsJ01C4QMNBSzBXqWq2EHRlIDFrsR6AGSGO01eiFnkhhy6iqSRSQMRNA==",
+  "dgSpecHash": "MUOtSg7cXkfeBCDKlXQZKPtPK78Rg0bcx276mNnzLLsH2I8jVSylCSCdGPa6eGP1Y4i8EnEQDEXH6EOZdHGDAA==",
   "success": true,
   "projectFilePath": "C:\\YMYP-Angular\\BookStore\\BookStoreServer\\BookStoreServer.WebApi\\BookStoreServer.WebApi.csproj",
   "expectedPackageFiles": [

@@ -38,11 +38,11 @@ public class CategoriesController : ControllerBase
         return Ok(category);
     }
 
-    [HttpGet("{id}")]  //localhost:7082/api/Categories/RemoveById/1 | localhost:7082/api/Categories/RemoveById?id=1
+    [HttpGet("{id}")] //localhost:7082/api/Categories/RemoveById/1 | localhost:7082/api/Categories/RemoveById?id=1
     public IActionResult RemoveById(int id)
     {
         AppDbContext context = new();//instance
-        Category category = context.Categories.Find(id); //Select * From Categories Where Id = 1
+        Category? category = context.Categories.Find(id); //Select * From Categories Where Id = 1
         if (category == null) //Böle bir kategori yoksa hata fırlattırdım. 
         {
             return NotFound();
@@ -56,7 +56,7 @@ public class CategoriesController : ControllerBase
     public IActionResult Update(UpdateCategoryDto request)
     {
         AppDbContext context = new();
-        Category category = context.Categories.Find(request.Id);
+        Category? category = context.Categories.Find(request.Id);
         if(category == null)
         {
             return NotFound();

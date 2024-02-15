@@ -3,6 +3,8 @@ import { PopupService } from 'src/app/services/popup.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgIf, NgStyle } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 

@@ -6,11 +6,13 @@
                 <p>Please enter your login information</p>
 
             </div>
+           
+                
             <div class="card-body">
                 <form #loginForm="ngForm" (ngSubmit)="signIn(loginForm)" autocomplete="off">
                     <div class="form-group">
                         <label for="usernameOrEmail">User Name Or Email</label>
-                        <input validate  required minlength="3" type="text" ngModel name="userNameOrEmail" id="userNameOrEmail" class="form-control" >
+                        <input validate  required minlength="3" type="text" ngModel name="userNameOrEmail" id="userNameOrEmail" class="form-control">
                         <div class="invalid-feedback">
                             User name or email must be valid
                         </div>
@@ -48,7 +50,8 @@
 
 
             </div>
-
+       
+        
         </div>
 
     </div>

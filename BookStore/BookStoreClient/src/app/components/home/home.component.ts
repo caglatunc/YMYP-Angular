@@ -14,7 +14,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { IconControlDirective } from '../../directives/icon-control.directive';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor, NgClass, CurrencyPipe } from '@angular/common';
-import { BestsellerModel } from 'src/app/models/bestseller.model';
 import { OrderModel } from 'src/app/models/order.model';
 import { RouterLink } from '@angular/router';
 
@@ -62,7 +61,6 @@ export class HomeComponent implements OnInit {
     this.getLastComments()
   }
 
-
   getBestsellers() {
     this.http.get<BookModel[]>('https://localhost:7078/api/Home/Bestsellers/').subscribe({
       next: (res: any) => {
@@ -86,7 +84,7 @@ export class HomeComponent implements OnInit {
   }
  
   getLastComments() {
-    this.http.get<BestsellerModel[]>('https://localhost:7082/api/Home/GetLastComments/').subscribe({
+    this.http.get<OrderModel[]>('https://localhost:7082/api/Home/GetLastComments/').subscribe({
       next: (res: any) => {
         this.lastComments = res;
       },
@@ -96,7 +94,6 @@ export class HomeComponent implements OnInit {
     });
   }
  
-
   addShoppingCart(book: BookModel) {
     if (localStorage.getItem("response")) {
       const data: AddShoppingCartModel = new AddShoppingCartModel();
