@@ -33,53 +33,11 @@
         </div>
       </div>
       <div class="card-body">
-        <button class="btn btn-primary btn-sm mb-1" data-toggle="modal" data-target="#addStudentModal">Add
-          Student</button>
-        <!-- Modal -->
-        <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="staticBackdropLabel"
-          aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addStudentModalLabel">Add Student</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <!-- Form Başlangıcı -->
-                <form #addStudentForm="ngForm" (ngSubmit)="onSubmit(addStudentForm)">
-                  <div class="form-group">
-                    <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName"
-                      [(ngModel)]="student.firstName" required>
-
-                  </div>
-                  <div class="form-group">
-                    <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="student.lastName"
-                      required>
-                  </div> 
-                  <div class="form-group">
-                    <label for="identityNumber" class="form-label">Identity Number:</label>
-                    <input type="text" class="form-control" id="identityNumber" name="identityNumber"
-                      [(ngModel)]="student.identityNumber" required>
-
-                  </div>
-                  <div class="form-group">
-                    <label for="classRoom" class="form-label">ClassRoom:</label>
-                    <select class="form-control" id="classRoom" name="classRoom" [(ngModel)]="selectedRoomId" required>
-                      <option *ngFor="let room of classRooms" [value]="room.id">{{room.name}}</option>
-                    </select>
-                  </div>
-                  <div *ngIf="addStudentForm.submitted && !addStudentForm.valid" class="alert alert-danger">
-                    Lütfen tüm alanları doğru bir şekilde doldurun.
-                  </div>
-                  <button type="submit" class="btn btn-primary">Kaydet</button>
-                </form>
-                <!-- Form Sonu -->
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Add Student Button -->
+        <button class="btn btn-primary btn-sm mb-1" data-toggle="modal" data-target="#studentAddModal">
+          Add Student
+        </button>
+        <!-- Card -->
         <div class="card card-primary card-outline card-outline-tabs">
           <div class="card-header p-0 border-bottom-0">
             <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
@@ -90,42 +48,26 @@
                   href="#students-tab" role="tab">{{room.name}}</a>
               </li>
               }
-              <button class="btn btn-primary btn-sm mb-1" data-toggle="modal" data-target="#addClassModal">Add
-                ClassRoom</button>
-              <!-- Sınıf Ekleme Modalı -->
-              <div class="modal fade" id="addClassModal" tabindex="-1" aria-labelledby="addClassModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="addClassModalLabel">Add ClassRoom</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form #classForm="ngForm" (ngSubmit)="onSubmitClassRoom(classForm)">
-                        <!-- Sınıf Adı -->
-                        <div class="mb-3">
-                          <label for="className" class="form-label">ClassRoom Name</label>
-                          <input type="text" class="form-control" id="className" [(ngModel)]="class.name"
-                            name="className" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add ClassRoom</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!-- Add ClassRoom Btn -->
+              <button class="btn btn-primary btn-sm mb-1" data-toggle="modal" data-target="#addClassModal">
+                Add ClassRoom
+              </button>
             </ul>
           </div>
           <div class="card-body">
-            <!-- Search İnputu-->
-            <div class="search-container mb-3" style="text-align: right;">
-              <input type="text" id="searchInput" class="form-control" style="width: 200px; padding-left: 35px; display: inline-block;"
-                placeholder="Search..." [(ngModel)]="searchStudent">
-            </div>
-            <!-- End -->
             <div class="tab-content" id="tabs-tabContent">
-              <div class="tab-pane fade active show" id="students-tab" role="tabpanel">
+              <!-- Search İnput-->
+              <div class="row">
+                <div class="col-9"></div>
+                <div class="col-3">
+                  <i class="fa-solid fa-magnifying-glass text-secondary"
+                    style="position: absolute; bottom: 0.3px; left: 10px; padding: 10px;"></i>
+                  <input type="search" [(ngModel)]="search" class="form-control" placeholder="Search"
+                    style="padding-left: 40px;">
+                </div>
+              </div>
+              <!--Search İnput End -->
+              <div class="tab-pane fade active show mt-1" id="students-tab" role="tabpanel">
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
@@ -137,12 +79,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for (student of students | student:searchStudent; track student) {
+                    @for (student of students | student:search; track student) {
                     <tr>
                       <td>{{$index+1}}</td>
                       <td>{{student.fullName}}</td>
                       <td>{{student.studentNumber}}</td>
-                      <td>{{student.identityNumber | maskIdentity}}</td>
+                      <td>{{student.identityNumber}}</td>
                       <td>
                         <button class="btn btn-outline-info btn-sm">Update</button>
                         <button class="btn btn-outline-danger btn-sm ms-1">Remove</button>
@@ -159,5 +101,81 @@
       <div class="card-footer">
       </div>
     </div>
+
+    <!-- <nav *ngIf="response" aria-label="Page navigation example" style="float: right;">
+      <ul class="pagination">
+        <li class="page-item" *ngIf="!response?.isFirstPage">
+          <a class="page-link" (click)="getAll(response.pageNumber -1 )"  aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" [ngClass]="response.pageNumber == p ? 'active' : ''" *ngFor="let p of pageNumbers">
+          <a class="page-link" (click)="getAll(p)">{{p}}</a>
+        </li>
+        <li class="page-item" *ngIf="!response?.isLastPage">
+          <a class="page-link" (click)="getAll(response.pageNumber + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav> -->
   </section>
+</div>
+
+<!-- Student Add Modal -->
+<div class="modal fade" id="studentAddModel" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Add Student</h1>
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-x"></i>
+        </button>
+      </div>
+      <form #addStudentForm="ngForm" (ngSubmit)="createStudent()" autocomplete="false">
+        <div class="modal-body">
+          <!-- ClassRoom -->
+          <div class="form-group">
+            <label for="classRoomId">ClassRoom</label>
+            <select class="form-control" [(ngModel)]="addStudentModel.classRoomId" name="classRoomId">
+              <option value="0">Please Select...</option>
+              @for (class of classRooms; track class) {
+                <option [value]="class.id">
+                  {{class.name}}
+                </option>
+              }
+            </select>
+          </div>
+
+          <!-- First Name -->
+          <div class="form-group mt-1">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" [(ngModel)="addStudentModel.firstName" required
+              minlength="3">
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="form-group mt-1">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" [(ngModel)="addStudentModel.lastName" required
+              minlength="3">
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <!-- Idenitity Number -->
+          <div class="form-group mt-1">
+            <label for="idenitityNumber">Idenitity Number</label>
+            <input type="text" id="idenitityNumber" name="idenitityNumber" [(ngModel)="addStudentModel.idenitityNumber"
+              required minlength="11" maxLength="11">
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

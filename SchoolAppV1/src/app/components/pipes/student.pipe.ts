@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { StudentModel } from '../../Models/student.model';
 
 @Pipe({
   name: 'student',
@@ -6,12 +7,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class StudentPipe implements PipeTransform {
 
-  transform(value: any[], search:string){
+  transform(value: StudentModel[], search:string):StudentModel[] {
     if(search == "") return value;
-
     return value.filter(p=> 
       p.fullName.toLowerCase().includes(search.toLowerCase()) || 
-      p.studentNumber.toString().toLowerCase().includes(search) || 
-      p.identityNumber.toString().toLowerCase().includes(search))
-  }
+      p.identityNumber.includes(search) ||
+      p.studentNumber.toString().includes(search)
+  );
+}
 }
